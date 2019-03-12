@@ -1,4 +1,4 @@
 export interface EmploymentType {
-  value: string;
+  value: number;
   viewValue: string;
 }

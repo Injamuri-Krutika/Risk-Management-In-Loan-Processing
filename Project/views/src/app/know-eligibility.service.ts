@@ -23,7 +23,8 @@ export class KnowEligibilityService {
     })
   };
   /** GET Eligibility Details from the server */
-  getEligibilityDetails(): Observable<EligibilityDetails> {
+  getEligibilityDetails(id: number): Observable<EligibilityDetails> {
+    let params = new URLSearchParams();
     return this.http
       .get<EligibilityDetails>(this.eligibilityUrl, this.httpOptions)
       .pipe(

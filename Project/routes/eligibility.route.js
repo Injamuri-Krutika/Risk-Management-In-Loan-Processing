@@ -5,7 +5,7 @@ const router = express.Router();
 const eligibilityController = require("../controllers/eligibility.controller");
 
 // a simple test url to check that all of our files are communicating correctly.
-router.get("/get", eligibilityController.eligibilityDetails);
+router.get("/get/:id", eligibilityController.eligibilityDetails);
 
 router.post("/create", eligibilityController.eligibilityCreate);
 

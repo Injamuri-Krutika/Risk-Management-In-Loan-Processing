@@ -43,8 +43,8 @@ export class NewUserComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
   employmentTypes: EmploymentType[] = [
-    { value: "salaried", viewValue: "Salaried" },
-    { value: "selfEmployment", viewValue: "Self - Employment" }
+    { value: 1, viewValue: "Salaried" },
+    { value: 2, viewValue: "Self - Employment" }
   ];
   basicInfoForm = this.fb.group({
     firstName: ["", Validators.required],
@@ -69,7 +69,8 @@ export class NewUserComponent implements OnInit {
   eligibilityDetails: EligibilityDetails;
   onSubmit() {
     console.log("Inside on submit");
-    this.eligibilityService.getEligibilityDetails().subscribe(details => {
+    var id = this.basicInfoForm.get("employmentType").value;
+    this.eligibilityService.getEligibilityDetails(id).subscribe(details => {
       this.eligibilityDetails = details;
       console.log(this.eligibilityDetails);
       console.log(this.eligibilityDetails);
