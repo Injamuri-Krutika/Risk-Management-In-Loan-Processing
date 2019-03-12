@@ -1,0 +1,71 @@
+<mat-card class="new-user-div">
+  <form
+    class="example-form"
+    [formGroup]="basicInfoForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <mat-form-field class="example-full-width">
+      <input
+        matInput
+        placeholder="First Name"
+        formControlName="firstName"
+        [errorStateMatcher]="matcher"
+        required
+      />
+      <mat-error *ngIf="basicInfoForm.get('firstName').invalid">{{
+        getErrorMessage("firstName")
+      }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input
+        matInput
+        placeholder="Last Name"
+        formControlName="lastName"
+        [errorStateMatcher]="matcher"
+        required
+      />
+      <mat-error *ngIf="basicInfoForm.get('lastName').invalid">{{
+        getErrorMessage("lastName")
+      }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input
+        numberOnly
+        matInput
+        placeholder="Age"
+        formControlName="age"
+        [errorStateMatcher]="matcher"
+        maxlength="2"
+        required
+      />
+      <mat-error *ngIf="basicInfoForm.get('age').invalid">{{
+        getErrorMessage("age")
+      }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select
+        placeholder="Employment Type"
+        [errorStateMatcher]="matcher"
+        formControlName="employmentType"
+        required
+      >
+        <mat-option *ngFor="let type of employmentTypes" [value]="type.value">
+          {{ type.viewValue }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="basicInfoForm.get('employmentType').invalid">{{
+        getErrorMessage("employmentType")
+      }}</mat-error>
+    </mat-form-field>
+
+    <br /><br /><br />
+    <button
+      [disabled]="basicInfoForm.invalid"
+      mat-raised-button
+      style="float:right;margin-right:10px;"
+    >
+      Submit
+    </button>
+  </form>
+</mat-card>

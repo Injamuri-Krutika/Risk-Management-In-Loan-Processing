@@ -1,0 +1,8 @@
+.basic-div{
+    margin: 10em 23em;
+    padding: 10em 5em;
+    display: block; 
+    border: solid black 1px;
+    width: 25%;
+    text-align: center;
+}
