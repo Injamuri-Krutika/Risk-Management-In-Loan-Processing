@@ -1,70 +1,374 @@
 <mat-card class="new-user-div">
-  <form
-    class="example-form"
-    [formGroup]="basicInfoForm"
-    (ngSubmit)="onSubmit()"
-  >
-    <mat-form-field class="example-full-width">
-      <input
-        matInput
-        placeholder="First Name"
-        formControlName="firstName"
-        [errorStateMatcher]="matcher"
-        required
-      />
-      <mat-error *ngIf="basicInfoForm.get('firstName').invalid">{{
-        getErrorMessage("firstName")
-      }}</mat-error>
-    </mat-form-field>
+  <mat-horizontal-stepper #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup" (ngSubmit)="onSubmitFirstForm()">
+        <ng-template matStepLabel>Fill out Name Details</ng-template>
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            placeholder="First Name"
+            formControlName="firstName"
+            [errorStateMatcher]="matcher"
+            required
+          />
+          <mat-error *ngIf="firstFormGroup.get('firstName').invalid">{{
+            getErrorMessage("firstName")
+          }}</mat-error> </mat-form-field
+        ><br />
 
-    <mat-form-field class="example-full-width">
-      <input
-        matInput
-        placeholder="Last Name"
-        formControlName="lastName"
-        [errorStateMatcher]="matcher"
-        required
-      />
-      <mat-error *ngIf="basicInfoForm.get('lastName').invalid">{{
-        getErrorMessage("lastName")
-      }}</mat-error>
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-      <input
-        numberOnly
-        matInput
-        placeholder="Age"
-        formControlName="age"
-        [errorStateMatcher]="matcher"
-        maxlength="2"
-        required
-      />
-      <mat-error *ngIf="basicInfoForm.get('age').invalid">{{
-        getErrorMessage("age")
-      }}</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-select
-        placeholder="Employment Type"
-        [errorStateMatcher]="matcher"
-        formControlName="employmentType"
-        required
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            placeholder="Last Name"
+            formControlName="lastName"
+            [errorStateMatcher]="matcher"
+            required
+          />
+          <mat-error *ngIf="firstFormGroup.get('lastName').invalid">{{
+            getErrorMessage("lastName")
+          }}</mat-error> </mat-form-field
+        ><br />
+        <mat-form-field class="example-full-width">
+          <input
+            numberOnly
+            matInput
+            placeholder="Age"
+            formControlName="age"
+            [errorStateMatcher]="matcher"
+            maxlength="2"
+            required
+          />
+          <mat-error *ngIf="firstFormGroup.get('age').invalid">{{
+            getErrorMessage("age")
+          }}</mat-error> </mat-form-field
+        ><br />
+        <mat-form-field>
+          <mat-select
+            placeholder="Employment Type"
+            [errorStateMatcher]="matcher"
+            formControlName="employmentType"
+            required
+          >
+            <mat-option
+              *ngFor="let type of employmentTypes"
+              [value]="type.value"
+            >
+              {{ type.viewValue }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="firstFormGroup.get('employmentType').invalid">{{
+            getErrorMessage("employmentType")
+          }}</mat-error> </mat-form-field
+        ><br />
+        <div>
+          <button
+            mat-button
+            class="buttonRight"
+            [disabled]="firstFormGroup.invalid"
+          >
+            Next
+          </button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <ng-template matStepLabel>Fill out Income Details</ng-template>
+      <form
+        [formGroup]="secondFormGroup"
+        *ngIf="firstFormGroup.get('employmentType').value == 1"
+        (ngSubmit)="onSubmitSecondForm(1)"
       >
-        <mat-option *ngFor="let type of employmentTypes" [value]="type.value">
-          {{ type.viewValue }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="basicInfoForm.get('employmentType').invalid">{{
-        getErrorMessage("employmentType")
-      }}</mat-error>
-    </mat-form-field>
+        <div formGroupName="salariedForm">
+          <div formGroupName="experienceDetails">
+            <mat-form-field class="example-full-width">
+              <input
+                numberOnly
+                matInput
+                placeholder="Overall Experience"
+                formControlName="overallExp"
+                [errorStateMatcher]="matcher"
+                required
+              />
 
-    <br /><br /><br />
-    <button
-      mat-raised-button
-      style="float:right;margin-right:10px;"
-    >
-      Submit
-    </button>
-  </form>
+              <mat-error
+                *ngIf="
+                  secondFormGroup
+                    .get('salariedForm')
+                    .get('experienceDetails')
+                    .get('overallExp').invalid
+                "
+                >{{ getErrorMessage("overallExp") }}</mat-error
+              > </mat-form-field
+            ><br />
+            <mat-form-field class="example-full-width">
+              <input
+                numberOnly
+                matInput
+                placeholder="Experience in Current Company"
+                formControlName="currentCompanyExp"
+                [errorStateMatcher]="matcher"
+                required
+              />
+              <mat-error
+                *ngIf="
+                  secondFormGroup
+                    .get('salariedForm')
+                    .get('experienceDetails')
+                    .get('currentCompanyExp').invalid
+                "
+                >{{ getErrorMessage("currentCompanyExp") }}</mat-error
+              > </mat-form-field
+            ><br />
+            <mat-error
+              *ngIf="
+                secondFormGroup
+                  .get('salariedForm')
+                  .get('experienceDetails')
+                  .get('overallExp').valid &&
+                secondFormGroup
+                  .get('salariedForm')
+                  .get('experienceDetails')
+                  .get('currentCompanyExp').valid &&
+                secondFormGroup.get('salariedForm').get('experienceDetails')
+                  .invalid
+              "
+              >{{ getErrorMessage("experienceDetails") }}</mat-error
+            >
+          </div>
+          <div formGroupName="incomeDetails">
+            <mat-form-field class="example-full-width">
+              <input
+                numberOnly
+                matInput
+                placeholder="Income Per Mmonth"
+                formControlName="incomePerMmonth"
+                [errorStateMatcher]="matcher"
+                required
+              />
+              <mat-error
+                *ngIf="
+                  secondFormGroup
+                    .get('salariedForm')
+                    .get('incomeDetails')
+                    .get('incomePerMmonth').invalid
+                "
+                >{{ getErrorMessage("incomePerMmonth") }}</mat-error
+              > </mat-form-field
+            ><br />
+            <mat-form-field class="example-full-width">
+              <input
+                numberOnly
+                matInput
+                placeholder="EMI Per Mmonth"
+                formControlName="emiPerMonth"
+                [errorStateMatcher]="matcher"
+              />
+              <mat-error
+                *ngIf="
+                  secondFormGroup
+                    .get('salariedForm')
+                    .get('incomeDetails')
+                    .get('emiPerMonth').invalid
+                "
+                >{{ getErrorMessage("emiPerMonth") }}</mat-error
+              > </mat-form-field
+            ><br />
+            <mat-error
+              *ngIf="
+                secondFormGroup
+                  .get('salariedForm')
+                  .get('incomeDetails')
+                  .get('incomePerMmonth').valid &&
+                secondFormGroup
+                  .get('salariedForm')
+                  .get('incomeDetails')
+                  .get('emiPerMonth').valid &&
+                secondFormGroup.get('salariedForm').get('incomeDetails').invalid
+              "
+              >{{ getErrorMessage("incomeDetails") }}</mat-error
+            >
+          </div>
+        </div>
+        <div>
+          <button
+            class="buttonRight"
+            mat-button
+            [disabled]="secondFormGroup.get('salariedForm').invalid"
+          >
+            Next
+          </button>
+        </div>
+      </form>
+
+      <form
+        [formGroup]="secondFormGroup"
+        *ngIf="firstFormGroup.get('employmentType').value == 2"
+        (ngSubmit)="onSubmitSecondForm(2)"
+      >
+        <div formGroupName="selfEmploymentForm">
+          <mat-form-field class="example-full-width">
+            <input
+              numberOnly
+              matInput
+              placeholder="Experience in the current business"
+              formControlName="experience"
+              [errorStateMatcher]="matcher"
+              required
+            />
+            <mat-error
+              *ngIf="
+                secondFormGroup.get('selfEmploymentForm').get('experience')
+                  .invalid
+              "
+              >{{ getErrorMessage("experience") }}</mat-error
+            > </mat-form-field
+          ><br />
+
+          <mat-form-field class="example-full-width">
+            <input
+              numberOnly
+              matInput
+              placeholder="Income Per Annum"
+              formControlName="incomePerAnnum"
+              [errorStateMatcher]="matcher"
+              required
+            />
+            <mat-error
+              *ngIf="
+                secondFormGroup.get('selfEmploymentForm').get('incomePerAnnum')
+                  .invalid
+              "
+              >{{ getErrorMessage("incomePerAnnum") }}</mat-error
+            > </mat-form-field
+          ><br />
+
+          <mat-form-field class="example-full-width">
+            <input
+              numberOnly
+              matInput
+              placeholder="EMI Per Mmonth"
+              formControlName="emiPerMonth"
+              [errorStateMatcher]="matcher"
+            />
+            <mat-error
+              *ngIf="
+                secondFormGroup.get('selfEmploymentForm').get('emiPerMonth')
+                  .invalid
+              "
+              >{{ getErrorMessage("emiPerMonth") }}</mat-error
+            > </mat-form-field
+          ><br />
+          <br />
+          <table>
+            <tr>
+              <td class="mat-body-strong">Own Residence*:</td>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td>
+                <mat-radio-group
+                  required
+                  formControlName="residenceOwned"
+                  required
+                >
+                  <mat-radio-button
+                    *ngFor="let val of yesNo"
+                    [value]="val"
+                    required
+                  >
+                    {{ val }}
+                  </mat-radio-button>
+                </mat-radio-group>
+              </td>
+            </tr>
+            <tr>
+              <td class="mat-body-strong">Own Office*:</td>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td>
+                <mat-radio-group
+                  required
+                  formControlName="officeOwned"
+                  required
+                >
+                  <mat-radio-button
+                    *ngFor="let val of yesNo"
+                    [value]="val"
+                    required
+                  >
+                    {{ val }}
+                  </mat-radio-button>
+                </mat-radio-group>
+              </td>
+            </tr>
+          </table>
+
+          <!-- <mat-radio-group required formControlName="residenceOwned"
+            >Own Residence:
+            <mat-radio-button *ngFor="let val of yesNo" [value]="val">
+              {{ val }}
+            </mat-radio-button>
+          </mat-radio-group>
+          <br />
+          <br />
+          <mat-radio-group required formControlName="officeOwned"
+            >Own Office:
+            <mat-radio-button *ngFor="let val of yesNo" [value]="val">
+              {{ val }}
+            </mat-radio-button>
+          </mat-radio-group> -->
+          <br />
+        </div>
+        <div>
+          <button
+            class="buttonRight"
+            mat-button
+            [disabled]="secondFormGroup.get('selfEmploymentForm').invalid"
+          >
+            Next
+          </button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <div *ngIf="loanParameters">
+        <table>
+          <tr>
+            <td><span class="mat-body-strong">Loan Amount</span></td>
+            <td>&nbsp;</td>
+            <td>
+              <span class="mat-body">
+                {{ loanParameters.loanAmount | currency: "INR":true }}/-</span
+              >
+            </td>
+          </tr>
+          <tr>
+            <td><span class="mat-body-strong">Tenure</span></td>
+            <td>&nbsp;</td>
+            <td>
+              <span class="mat-body">{{ loanParameters.tenure }} years</span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="mat-body-strong">Rate of Interest</span></td>
+            <td>&nbsp;</td>
+            <td>
+              <span class="mat-body">{{ loanParameters.roi }}%</span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="mat-body-strong">EMI per Month</span></td>
+            <td>&nbsp;</td>
+            <td>
+              <span class="mat-body">{{
+                loanParameters.emi | currency: "INR":true
+              }}</span>
+            </td>
+          </tr>
+        </table>
+
+        <button class="buttonRight" mat-button routerLink="/upload-documents">
+          Upload Documents
+        </button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
 </mat-card>
