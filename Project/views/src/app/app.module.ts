@@ -11,7 +11,9 @@ import { HttpClientModule } from "@angular/common/http";
 import { BasicComponent } from "./basic/basic.component";
 import { NewUserComponent } from "./new-user/new-user.component";
 import { IncomeEmiComponent } from "./income-emi/income-emi.component";
-import { NumberOnlyDirective } from './number-only.directive';
+import { NumberOnlyDirective } from "./number-only.directive";
+import { IneligibleDialogueComponent } from "./ineligible-dialogue/ineligible-dialogue.component";
+import { UploadDocumentsComponent } from './upload-documents/upload-documents.component';
 
 @NgModule({
   declarations: [
@@ -19,8 +21,11 @@ import { NumberOnlyDirective } from './number-only.directive';
     NewUserComponent,
     BasicComponent,
     IncomeEmiComponent,
-    NumberOnlyDirective
+    NumberOnlyDirective,
+    IneligibleDialogueComponent,
+    UploadDocumentsComponent
   ],
+  entryComponents: [IneligibleDialogueComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
