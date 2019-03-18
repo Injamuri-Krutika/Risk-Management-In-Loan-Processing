@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Customer } from "./Customer";
-import { EligibilityDetails } from "src/EligibilityDetaiils";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { Customer } from "./Classes";
+import { EligibilityDetails } from "src/EligibilityDetails";
 import { Observable, of } from "rxjs";
 import { catchError, map, tap } from "rxjs/operators";
 
@@ -20,13 +20,22 @@ export class KnowEligibilityService {
       "Access-Control-Allow-Headers": "Content-Type",
       "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
       "Access-Control-Allow-Origin": "*"
-    })
+    }),
+    params: {}
   };
   /** GET Eligibility Details from the server */
-  getEligibilityDetails(id: number): Observable<EligibilityDetails> {
-    let params = new URLSearchParams();
+  getEligibilityDetails(
+    id: number,
+    age: number
+  ): Observable<EligibilityDetails> {
+    // let params = new HttpParams();
+    // params = params.append("id", id + "");
+    // this.httpOptions.params = params;
     return this.http
-      .get<EligibilityDetails>(this.eligibilityUrl, this.httpOptions)
+      .get<EligibilityDetails>(
+        this.eligibilityUrl + "/" + id + "/" + age,
+        this.httpOptions
+      )
       .pipe(
         tap(_ => console.log("fetched Eligibility Details")),
         catchError(
