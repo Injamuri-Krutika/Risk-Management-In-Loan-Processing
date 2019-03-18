@@ -5,12 +5,12 @@ const router = express.Router();
 const eligibilityController = require("../controllers/eligibility.controller");
 
 // a simple test url to check that all of our files are communicating correctly.
-router.get("/get/:id", eligibilityController.eligibilityDetails);
+router.get("/get/:id/:age", eligibilityController.eligibilityDetails);
 
 router.post("/create", eligibilityController.eligibilityCreate);
 
 // router.get("/update", eligibilityController.eligibilityUpdate);
 
-// router.get("/delete", eligibilityController.eligibilityDelete);
+router.delete("/delete/:id", eligibilityController.eligibilityDelete);
 
 module.exports = router;

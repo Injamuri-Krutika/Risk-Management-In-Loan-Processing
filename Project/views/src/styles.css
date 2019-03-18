@@ -1,5 +1,15 @@
 /* You can add global styles to this file, an   d also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-body{
-    background-color: beige;
+body {
+  background-color: beige;
+}
+
+.mat-form-field-infix {
+  width: 300px !important;
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+.mat-horizontal-stepper-header {
+  pointer-events: none !important;
 }
