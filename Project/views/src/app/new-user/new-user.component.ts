@@ -22,8 +22,8 @@ import { LoanParameters } from "../Classes";
 import { MyErrorStateMatcher } from "../MyErrorStateMatcher";
 import { CustomValidators } from "../CustomValidators";
 import { NewUserErrorMessagesService } from "../new-user-error-messages.service";
-import { ClaculateAgeService } from "../claculate-age.service";
-import { ClaculateLoanParametersService } from "../claculate-loan-parameters.service";
+import { CalculateAgeService } from "../calculate-age.service";
+import { CalculateLoanParametersService } from "../calculate-loan-parameters.service";
 
 @Component({
   selector: "app-new-user",
@@ -53,8 +53,8 @@ export class NewUserComponent implements OnInit {
     private fb: FormBuilder,
     public dialog: MatDialog,
     public errorServerice: NewUserErrorMessagesService,
-    private calcAgeService: ClaculateAgeService,
-    private calcLoanParams: ClaculateLoanParametersService
+    private calcAgeService: CalculateAgeService,
+    private calcLoanParams: CalculateLoanParametersService
   ) {}
 
   ngOnInit() {
