@@ -17,19 +17,13 @@ import { ErrorStateMatcher, MatStepper, MatDialog } from "@angular/material";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 import { IneligibleDialogueComponent } from "../ineligible-dialogue/ineligible-dialogue.component";
 import { stringify } from "@angular/core/src/render3/util";
-import { AGE_TENURE } from "src/ageTenure";
+import { AGE_TENURE } from "src/app/ageTenure";
 import { LoanParameters } from "../Classes";
-
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched));
-  }
-}
+import { MyErrorStateMatcher } from "../MyErrorStateMatcher";
+import { CustomValidators } from "../CustomValidators";
+import { NewUserErrorMessagesService } from "../new-user-error-messages.service";
+import { ClaculateAgeService } from "../claculate-age.service";
+import { ClaculateLoanParametersService } from "../claculate-loan-parameters.service";
 
 @Component({
   selector: "app-new-user",
@@ -57,10 +51,17 @@ export class NewUserComponent implements OnInit {
   constructor(
     private eligibilityService: KnowEligibilityService,
     private fb: FormBuilder,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public errorServerice: NewUserErrorMessagesService,
+    private calcAgeService: ClaculateAgeService,
+    private calcLoanParams: ClaculateLoanParametersService
   ) {}
 
   ngOnInit() {
+    console.log(this.errorServerice);
+    console.log(this.calcLoanParams);
+    console.log(this.calcAgeService);
+
     this.loanParameters = new LoanParameters();
     this.firstFormGroup = this.fb.group({
       firstName: [
@@ -77,14 +78,6 @@ export class NewUserComponent implements OnInit {
           Validators.pattern(/^[A-Za-z]+$/)
         ])
       ],
-      // age: [
-      //   "",
-      //   Validators.compose([
-      //     Validators.required,
-      //     Validators.minLength(1),
-      //     Validators.maxLength(2)
-      //   ])
-      // ],
       employmentType: ["", Validators.required],
       dob: ["", Validators.required],
 
@@ -112,7 +105,7 @@ export class NewUserComponent implements OnInit {
             currentCompanyExp: ["", Validators.required]
           },
           {
-            validators: NewUserComponent.currExpValidation
+            validators: CustomValidators.currExpValidation
           }
         ),
         incomeDetails: this.fb.group(
@@ -121,7 +114,7 @@ export class NewUserComponent implements OnInit {
             emiPerMonth: [""]
           },
           {
-            validators: NewUserComponent.incomeEmiValidation
+            validators: CustomValidators.incomeEmiValidation
           }
         )
       }),
@@ -136,130 +129,12 @@ export class NewUserComponent implements OnInit {
     });
   }
 
-  static currExpValidation(formGroup: FormGroup): any {
-    let overallExp = parseInt(formGroup.controls["overallExp"].value);
-    let currentCompanyExp = parseInt(
-      formGroup.controls["currentCompanyExp"].value
-    );
-    if (overallExp >= currentCompanyExp) {
-      return null;
-    }
-    return { valid: false };
-  }
-
-  static incomeEmiValidation(formGroup: FormGroup): any {
-    let incomePerMmonth = parseInt(formGroup.controls["incomePerMmonth"].value);
-    let emiPerMonth = parseInt(formGroup.controls["emiPerMonth"].value);
-    if (isNaN(emiPerMonth)) {
-      return null;
-    } else {
-      if (incomePerMmonth >= emiPerMonth) {
-        return null;
-      }
-      return { valid: false };
-    }
-  }
-  getErrorMessage(fieldName) {
-    if (fieldName === "firstName") {
-      return this.firstFormGroup.get("firstName").hasError("required")
-        ? "First Name is mandatory"
-        : this.firstFormGroup.get("firstName").hasError("pattern")
-        ? "Not a valid First Name"
-        : "";
-    }
-    if (fieldName === "lastName") {
-      return this.firstFormGroup.get("lastName").hasError("required")
-        ? "Last Name is mandatory"
-        : this.firstFormGroup.get("lastName").hasError("pattern")
-        ? "Not a valid Last Name"
-        : "";
-    }
-
-    if (fieldName === "phoneNumber") {
-      return this.firstFormGroup.get("phoneNumber").hasError("required")
-        ? "Phone Number is mandatory"
-        : this.firstFormGroup.get("phoneNumber").hasError("minlength")
-        ? "Not a valid phone number"
-        : "";
-    }
-
-    if (fieldName === "dob") {
-      return this.firstFormGroup.get("dob").hasError("required")
-        ? "Date of Birth is mandatory"
-        : "";
-    }
-
-    if (fieldName === "email") {
-      return this.firstFormGroup.get("email").hasError("required")
-        ? "Email is mandatory"
-        : this.firstFormGroup.get("email").hasError("pattern")
-        ? "Not a valid email id"
-        : "";
-    }
-    // if (fieldName === "age") {
-    //   return this.firstFormGroup.get("age").hasError("required")
-    //     ? "Age is mandatory"
-    //     : this.firstFormGroup.get("age").value == 0
-    //     ? "Dude!! Are u not born yet?"
-    //     : this.firstFormGroup.get("age").hasError("minlength")
-    //     ? "Not a valid Age"
-    //     : "";
-    // }
-    if (fieldName === "employmentType") {
-      return this.firstFormGroup.get("employmentType").hasError("required")
-        ? "Employment Type is mandatory"
-        : "";
-    }
-
-    if (fieldName === "overallExp") {
-      return this.secondFormGroup
-        .get("salariedForm")
-        .get("experienceDetails")
-        .get("overallExp")
-        .hasError("required")
-        ? "Overall Experience is mandatory"
-        : "";
-    }
-    if (fieldName === "currentCompanyExp") {
-      return this.secondFormGroup
-        .get("salariedForm")
-        .get("experienceDetails")
-        .get("currentCompanyExp")
-        .hasError("required")
-        ? "Current Company Experience is mandatory"
-        : "";
-    }
-    if (fieldName === "emiPerMonth") {
-      return this.secondFormGroup
-        .get("salariedForm")
-        .get("incomeDetails")
-        .get("emiPerMonth")
-        .hasError("required")
-        ? "EMI per month is mandatory"
-        : "";
-    }
-
-    if (fieldName === "incomePerMmonth") {
-      return this.secondFormGroup
-        .get("salariedForm")
-        .get("incomeDetails")
-        .get("incomePerMmonth")
-        .hasError("required")
-        ? "Income per month is mandatory"
-        : "";
-    }
-    if (fieldName === "experienceDetails") {
-      return "Overall Experience should be greater than current experience!";
-    }
-    if (fieldName === "incomeDetails") {
-      return "Income per month should be greater than EMI per month!";
-    }
-  }
-
   eligibilityDetails: EligibilityDetails;
   onSubmitFirstForm() {
     var id = this.firstFormGroup.get("employmentType").value;
-    var age = this.calculateAge(this.firstFormGroup.get("dob").value);
+    var age = this.calcAgeService.calculateAge(
+      this.firstFormGroup.get("dob").value
+    );
     var firstName = this.firstFormGroup.get("firstName").value;
     var lastName = this.firstFormGroup.get("lastName").value;
 
@@ -336,7 +211,11 @@ export class NewUserComponent implements OnInit {
       if (isInEligible) {
         this.openDialog(firstName, lastName, reason, formNumber);
       } else {
-        this.claculateLoanParameters(formNumber);
+        this.loanParameters = this.calcLoanParams.claculateLoanParameters(
+          formNumber,
+          this.secondFormGroup,
+          this.calcAgeService.calculateAge(this.firstFormGroup.get("dob").value)
+        );
         this.stepper.next();
       }
     } else {
@@ -383,7 +262,11 @@ export class NewUserComponent implements OnInit {
       if (isInEligible) {
         this.openDialog(firstName, lastName, reason, formNumber);
       } else {
-        this.claculateLoanParameters(formNumber);
+        this.loanParameters = this.calcLoanParams.claculateLoanParameters(
+          formNumber,
+          this.secondFormGroup,
+          this.calcAgeService.calculateAge(this.firstFormGroup.get("dob").value)
+        );
         this.stepper.next();
       }
     }
@@ -405,77 +288,5 @@ export class NewUserComponent implements OnInit {
       this.secondFormGroup.reset();
       this.stepper.selectedIndex = 0;
     });
-  }
-
-  claculateLoanParameters(formNumber) {
-    var age = this.calculateAge(this.firstFormGroup.get("dob").value);
-    var roi = 8.65;
-    var ageTenure = AGE_TENURE;
-    var lastAge;
-
-    var emiPerMonth, incomePerMmonth, loanAmount, tenure;
-    if (formNumber == 1) {
-      emiPerMonth = parseInt(
-        this.secondFormGroup
-          .get("salariedForm")
-          .get("incomeDetails")
-          .get("emiPerMonth").value
-      );
-      incomePerMmonth = parseInt(
-        this.secondFormGroup
-          .get("salariedForm")
-          .get("incomeDetails")
-          .get("incomePerMmonth").value
-      );
-    } else {
-      emiPerMonth = parseInt(
-        this.secondFormGroup.get("selfEmploymentForm").get("emiPerMonth").value
-      );
-      incomePerMmonth =
-        parseInt(
-          this.secondFormGroup.get("selfEmploymentForm").get("incomePerAnnum")
-            .value
-        ) / 12;
-    }
-    if (isNaN(emiPerMonth)) loanAmount = incomePerMmonth * 60;
-    else loanAmount = (incomePerMmonth - emiPerMonth) * 60;
-
-    for (var key in ageTenure) {
-      if (ageTenure.hasOwnProperty(key)) {
-        if (parseInt(key) > age) {
-          tenure = ageTenure[key][formNumber - 1];
-          break;
-        }
-        lastAge = key;
-      }
-    }
-    if (!tenure) {
-      tenure = ageTenure[lastAge][formNumber - 1];
-    }
-
-    var n = 12;
-    var r = roi / (n * 100);
-    var year = tenure;
-    var A =
-      (Math.pow(1 + r, n * year) * loanAmount * r) /
-      Math.pow(1 + r, n * year - 1);
-    var emi = A.toFixed(2);
-
-    //[P x R x (1+R)^N]/[(1+R)^ (N-1)],
-    // var emi =
-    //   (loanAmount * roiPerMonth * Math.pow(1 + roi, tenureInMonths)) /
-    //   Math.pow(1 + roiPerMonth, tenureInMonths - 1);
-
-    this.loanParameters.tenure = tenure;
-    this.loanParameters.roi = roi;
-    this.loanParameters.emi = parseInt(emi);
-    this.loanParameters.loanAmount = loanAmount;
-  }
-
-  calculateAge(dob) {
-    var ageDifMs = Date.now() - new Date(dob).getTime();
-    var ageDate = new Date(ageDifMs); // miliseconds from epoch
-    console.log(Math.abs(ageDate.getUTCFullYear() - 1970));
-    return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 }

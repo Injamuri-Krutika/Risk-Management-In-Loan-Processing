@@ -12,10 +12,7 @@
             required
           />
           <mat-error *ngIf="firstFormGroup.get('firstName').invalid">{{
-            errorServerice.getErrorMessage(
-              "firstName",
-              firstFormGroup.get("firstName")
-            )
+            errorServerice.getErrorMessage("firstName",firstFormGroup.get('firstName'))
           }}</mat-error> </mat-form-field
         ><br />
 
@@ -28,10 +25,7 @@
             required
           />
           <mat-error *ngIf="firstFormGroup.get('lastName').invalid">{{
-            errorServerice.getErrorMessage(
-              "lastName",
-              firstFormGroup.get("lastName")
-            )
+            errorServerice.getErrorMessage("lastName",firstFormGroup.get('lastName'))
           }}</mat-error> </mat-form-field
         ><br />
         <!-- <mat-form-field class="example-full-width">
@@ -59,7 +53,7 @@
             required
           />
           <mat-error *ngIf="firstFormGroup.get('dob').invalid">{{
-            errorServerice.getErrorMessage("dob", firstFormGroup.get("dob"))
+            errorServerice.getErrorMessage("dob",firstFormGroup.get('dob'))
           }}</mat-error> </mat-form-field
         ><br />
 
@@ -72,7 +66,7 @@
             required
           />
           <mat-error *ngIf="firstFormGroup.get('email').invalid">{{
-            errorServerice.getErrorMessage("email", firstFormGroup.get("email"))
+            errorServerice.getErrorMessage("email",firstFormGroup.get('email'))
           }}</mat-error> </mat-form-field
         ><br />
 
@@ -87,10 +81,7 @@
             required
           />
           <mat-error *ngIf="firstFormGroup.get('phoneNumber').invalid">{{
-            errorServerice.getErrorMessage(
-              "phoneNumber",
-              firstFormGroup.get("phoneNumber")
-            )
+            errorServerice.getErrorMessage("phoneNumber",firstFormGroup.get('phoneNumber'))
           }}</mat-error> </mat-form-field
         ><br />
 
@@ -109,10 +100,7 @@
             </mat-option>
           </mat-select>
           <mat-error *ngIf="firstFormGroup.get('employmentType').invalid">{{
-            errorServerice.getErrorMessage(
-              "employmentType",
-              firstFormGroup.get("employmentType")
-            )
+            errorServerice.getErrorMessage("employmentType",firstFormGroup.get('employmentType'))
           }}</mat-error> </mat-form-field
         ><br />
         <div>
@@ -152,15 +140,10 @@
                     .get('experienceDetails')
                     .get('overallExp').invalid
                 "
-                >{{
-                  errorServerice.getErrorMessage(
-                    "overallExp",
-                    secondFormGroup
-                      .get("salariedForm")
-                      .get("experienceDetails")
-                      .get("overallExp")
-                  )
-                }}</mat-error
+                >{{ errorServerice.getErrorMessage("overallExp",secondFormGroup
+                .get('salariedForm')
+                .get('experienceDetails')
+                .get('overallExp')) }}</mat-error
               > </mat-form-field
             ><br />
             <mat-form-field class="example-full-width">
@@ -179,15 +162,10 @@
                     .get('experienceDetails')
                     .get('currentCompanyExp').invalid
                 "
-                >{{
-                  errorServerice.getErrorMessage(
-                    "currentCompanyExp",
-                    secondFormGroup
-                      .get("salariedForm")
-                      .get("experienceDetails")
-                      .get("currentCompanyExp")
-                  )
-                }}</mat-error
+                >{{ errorServerice.getErrorMessage("currentCompanyExp", secondFormGroup
+                .get('salariedForm')
+                .get('experienceDetails')
+                .get('currentCompanyExp')) }}</mat-error
               > </mat-form-field
             ><br />
             <mat-error
@@ -203,12 +181,7 @@
                 secondFormGroup.get('salariedForm').get('experienceDetails')
                   .invalid
               "
-              >{{
-                errorServerice.getErrorMessage(
-                  "experienceDetails",
-                  secondFormGroup.get("salariedForm")
-                )
-              }}</mat-error
+              >{{ errorServerice.getErrorMessage("experienceDetails") }}</mat-error
             >
           </div>
           <div formGroupName="incomeDetails">
@@ -228,15 +201,10 @@
                     .get('incomeDetails')
                     .get('incomePerMmonth').invalid
                 "
-                >{{
-                  errorServerice.getErrorMessage(
-                    "incomePerMmonth",
-                    secondFormGroup
-                      .get("salariedForm")
-                      .get("incomeDetails")
-                      .get("incomePerMmonth")
-                  )
-                }}</mat-error
+                >{{ errorServerice.getErrorMessage("incomePerMmonth",secondFormGroup
+                .get('salariedForm')
+                .get('incomeDetails')
+                .get('incomePerMmonth')) }}</mat-error
               > </mat-form-field
             ><br />
             <mat-form-field class="example-full-width">
@@ -254,15 +222,10 @@
                     .get('incomeDetails')
                     .get('emiPerMonth').invalid
                 "
-                >{{
-                  errorServerice.getErrorMessage(
-                    "emiPerMonth",
-                    secondFormGroup
-                      .get("salariedForm")
-                      .get("incomeDetails")
-                      .get("emiPerMonth")
-                  )
-                }}</mat-error
+                >{{ errorServerice.getErrorMessage("emiPerMonth",secondFormGroup
+                .get('salariedForm')
+                .get('incomeDetails')
+                .get('emiPerMonth')) }}</mat-error
               > </mat-form-field
             ><br />
             <mat-error
@@ -277,12 +240,7 @@
                   .get('emiPerMonth').valid &&
                 secondFormGroup.get('salariedForm').get('incomeDetails').invalid
               "
-              >{{
-                errorServerice.getErrorMessage(
-                  "incomeDetails",
-                  secondFormGroup.get("salariedForm")
-                )
-              }}</mat-error
+              >{{ errorServerice.getErrorMessage("incomeDetails") }}</mat-error
             >
           </div>
         </div>
@@ -317,12 +275,7 @@
                 secondFormGroup.get('selfEmploymentForm').get('experience')
                   .invalid
               "
-              >{{
-                errorServerice.getErrorMessage(
-                  "experience",
-                  secondFormGroup.get("selfEmploymentForm").get("experience")
-                )
-              }}</mat-error
+              >{{ errorServerice.getErrorMessage("experience",secondFormGroup.get('selfEmploymentForm').get('experience')) }}</mat-error
             > </mat-form-field
           ><br />
 
@@ -340,14 +293,7 @@
                 secondFormGroup.get('selfEmploymentForm').get('incomePerAnnum')
                   .invalid
               "
-              >{{
-                errorServerice.getErrorMessage(
-                  "incomePerAnnum",
-                  secondFormGroup
-                    .get("selfEmploymentForm")
-                    .get("incomePerAnnum")
-                )
-              }}</mat-error
+              >{{ errorServerice.getErrorMessage("incomePerAnnum",secondFormGroup.get('selfEmploymentForm').get('incomePerAnnum')) }}</mat-error
             > </mat-form-field
           ><br />
 
@@ -364,12 +310,7 @@
                 secondFormGroup.get('selfEmploymentForm').get('emiPerMonth')
                   .invalid
               "
-              >{{
-                errorServerice.getErrorMessage(
-                  "emiPerMonth",
-                  secondFormGroup.get("selfEmploymentForm").get("emiPerMonth")
-                )
-              }}</mat-error
+              >{{ errorServerice.getErrorMessage("emiPerMonth",secondFormGroup.get('selfEmploymentForm').get('emiPerMonth')) }}</mat-error
             > </mat-form-field
           ><br />
           <br />
@@ -378,7 +319,11 @@
               <td class="mat-body-strong">Own Residence*:</td>
               <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
               <td>
-                <mat-radio-group required formControlName="residenceOwned">
+                <mat-radio-group
+                  required
+                  formControlName="residenceOwned"
+                  required
+                >
                   <mat-radio-button
                     *ngFor="let val of yesNo"
                     [value]="val"
