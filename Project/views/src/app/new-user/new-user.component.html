@@ -28,7 +28,7 @@
             getErrorMessage("lastName")
           }}</mat-error> </mat-form-field
         ><br />
-        <mat-form-field class="example-full-width">
+        <!-- <mat-form-field class="example-full-width">
           <input
             numberOnly
             matInput
@@ -41,7 +41,50 @@
           <mat-error *ngIf="firstFormGroup.get('age').invalid">{{
             getErrorMessage("age")
           }}</mat-error> </mat-form-field
+        ><br /> -->
+
+        <mat-form-field class="example-full-width">
+          <input
+            type="date"
+            matInput
+            placeholder="Date of Birth"
+            formControlName="dob"
+            [errorStateMatcher]="matcher"
+            required
+          />
+          <mat-error *ngIf="firstFormGroup.get('dob').invalid">{{
+            getErrorMessage("dob")
+          }}</mat-error> </mat-form-field
         ><br />
+
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            placeholder="Email"
+            formControlName="email"
+            [errorStateMatcher]="matcher"
+            required
+          />
+          <mat-error *ngIf="firstFormGroup.get('email').invalid">{{
+            getErrorMessage("email")
+          }}</mat-error> </mat-form-field
+        ><br />
+
+        <mat-form-field class="example-full-width">
+          <input
+            numberOnly
+            matInput
+            placeholder="Phone Number"
+            formControlName="phoneNumber"
+            [errorStateMatcher]="matcher"
+            maxlength="10"
+            required
+          />
+          <mat-error *ngIf="firstFormGroup.get('phoneNumber').invalid">{{
+            getErrorMessage("phoneNumber")
+          }}</mat-error> </mat-form-field
+        ><br />
+
         <mat-form-field>
           <mat-select
             placeholder="Employment Type"
@@ -61,11 +104,7 @@
           }}</mat-error> </mat-form-field
         ><br />
         <div>
-          <button
-            mat-button
-            class="buttonRight"
-            [disabled]="firstFormGroup.invalid"
-          >
+          <button mat-button class="buttonRight">
             Next
           </button>
         </div>

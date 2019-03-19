@@ -77,15 +77,32 @@ export class NewUserComponent implements OnInit {
           Validators.pattern(/^[A-Za-z]+$/)
         ])
       ],
-      age: [
+      // age: [
+      //   "",
+      //   Validators.compose([
+      //     Validators.required,
+      //     Validators.minLength(1),
+      //     Validators.maxLength(2)
+      //   ])
+      // ],
+      employmentType: ["", Validators.required],
+      dob: ["", Validators.required],
+
+      email: [
         "",
         Validators.compose([
           Validators.required,
-          Validators.minLength(1),
-          Validators.maxLength(2)
+          Validators.pattern(/\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)
         ])
       ],
-      employmentType: ["", Validators.required]
+      phoneNumber: [
+        "",
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10)
+        ])
+      ]
     });
     this.secondFormGroup = this.fb.group({
       salariedForm: this.fb.group({
@@ -157,15 +174,37 @@ export class NewUserComponent implements OnInit {
         ? "Not a valid Last Name"
         : "";
     }
-    if (fieldName === "age") {
-      return this.firstFormGroup.get("age").hasError("required")
-        ? "Age is mandatory"
-        : this.firstFormGroup.get("age").value == 0
-        ? "Dude!! Are u not born yet?"
-        : this.firstFormGroup.get("age").hasError("minLength")
-        ? "Not a valid Age"
+
+    if (fieldName === "phoneNumber") {
+      return this.firstFormGroup.get("phoneNumber").hasError("required")
+        ? "Phone Number is mandatory"
+        : this.firstFormGroup.get("phoneNumber").hasError("minlength")
+        ? "Not a valid phone number"
         : "";
     }
+
+    if (fieldName === "dob") {
+      return this.firstFormGroup.get("dob").hasError("required")
+        ? "Date of Birth is mandatory"
+        : "";
+    }
+
+    if (fieldName === "email") {
+      return this.firstFormGroup.get("email").hasError("required")
+        ? "Email is mandatory"
+        : this.firstFormGroup.get("email").hasError("pattern")
+        ? "Not a valid email id"
+        : "";
+    }
+    // if (fieldName === "age") {
+    //   return this.firstFormGroup.get("age").hasError("required")
+    //     ? "Age is mandatory"
+    //     : this.firstFormGroup.get("age").value == 0
+    //     ? "Dude!! Are u not born yet?"
+    //     : this.firstFormGroup.get("age").hasError("minlength")
+    //     ? "Not a valid Age"
+    //     : "";
+    // }
     if (fieldName === "employmentType") {
       return this.firstFormGroup.get("employmentType").hasError("required")
         ? "Employment Type is mandatory"
@@ -220,7 +259,7 @@ export class NewUserComponent implements OnInit {
   eligibilityDetails: EligibilityDetails;
   onSubmitFirstForm() {
     var id = this.firstFormGroup.get("employmentType").value;
-    var age = this.firstFormGroup.get("age").value;
+    var age = this.calculateAge(this.firstFormGroup.get("dob").value);
     var firstName = this.firstFormGroup.get("firstName").value;
     var lastName = this.firstFormGroup.get("lastName").value;
 
@@ -369,7 +408,7 @@ export class NewUserComponent implements OnInit {
   }
 
   claculateLoanParameters(formNumber) {
-    var age = parseInt(this.firstFormGroup.get("age").value);
+    var age = this.calculateAge(this.firstFormGroup.get("dob").value);
     var roi = 8.65;
     var ageTenure = AGE_TENURE;
     var lastAge;
@@ -431,5 +470,12 @@ export class NewUserComponent implements OnInit {
     this.loanParameters.roi = roi;
     this.loanParameters.emi = parseInt(emi);
     this.loanParameters.loanAmount = loanAmount;
+  }
+
+  calculateAge(dob) {
+    var ageDifMs = Date.now() - new Date(dob).getTime();
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    console.log(Math.abs(ageDate.getUTCFullYear() - 1970));
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 }
