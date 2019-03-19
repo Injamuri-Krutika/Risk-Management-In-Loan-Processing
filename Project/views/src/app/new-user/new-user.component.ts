@@ -19,7 +19,7 @@ import { IneligibleDialogueComponent } from "../ineligible-dialogue/ineligible-d
 import { stringify } from "@angular/core/src/render3/util";
 import { AGE_TENURE } from "src/app/ageTenure";
 import { LoanParameters } from "../Classes";
-import { MyErrorStateMatcher } from "../MyErrorStateMatcher";
+import { CustomErrorStateMatcher } from "../CustomErrorStateMatcher";
 import { CustomValidators } from "../CustomValidators";
 import { NewUserErrorMessagesService } from "../new-user-error-messages.service";
 import { CalculateAgeService } from "../calculate-age.service";
@@ -41,7 +41,7 @@ export class NewUserComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   loanParameters: LoanParameters;
-  matcher = new MyErrorStateMatcher();
+  matcher = new CustomErrorStateMatcher();
   employmentTypes: EmploymentType[] = [
     { value: 1, viewValue: "Salaried" },
     { value: 2, viewValue: "Self - Employment" }
