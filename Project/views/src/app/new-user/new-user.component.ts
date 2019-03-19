@@ -243,7 +243,7 @@ export class NewUserComponent implements OnInit {
       if (this.eligibilityDetails.minExperience > experience) {
         reason =
           "Sorry! You are ineligible to apply for loan because you do not cross the minimum WORK EXPERIENCE bounds.";
-      } else if (this.eligibilityDetails.minIncome > incomePerAnnum) {
+      } else if (this.eligibilityDetails.minIncome > incomePerAnnum / 12) {
         reason =
           "Sorry! You are ineligible to apply for loan because you do not cross the minimum INCOME PER ANNUM bounds.";
       } else if (
