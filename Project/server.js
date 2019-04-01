@@ -20,7 +20,6 @@ mongoose.Promise = global.Promise;
 let db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 db.once("open", function callback() {
-  console.log("h");
   app.use(cors());
   app.use(express.static(distPath));
   app.use(bodyParser.json());
