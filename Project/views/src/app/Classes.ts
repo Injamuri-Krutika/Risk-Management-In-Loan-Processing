@@ -1,12 +1,19 @@
 export class Customer {
   firstName: string;
   lastName: string;
-  age: number;
+  dob: string;
   employerType: string;
   income: BigInteger;
-  emailId: string;
+  email: string;
+  employmentType: string;
   phoneNumber: number;
   emiPerMonth: number;
+  overallExp: string;
+  currentCompanyExp: string;
+  incomePerMonth: string;
+  incomePerAnnum: string;
+  residenceOwned: string;
+  officeOwned: string;
 }
 
 export class IneligibilityInformation {

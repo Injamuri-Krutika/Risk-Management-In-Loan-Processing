@@ -18,7 +18,7 @@ import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 import { IneligibleDialogueComponent } from "../ineligible-dialogue/ineligible-dialogue.component";
 import { stringify } from "@angular/core/src/render3/util";
 import { AGE_TENURE } from "src/app/ageTenure";
-import { LoanParameters } from "../Classes";
+import { LoanParameters, Customer } from "../Classes";
 import { CustomErrorStateMatcher } from "../CustomErrorStateMatcher";
 import { CustomValidators } from "../CustomValidators";
 import { NewUserErrorMessagesService } from "../new-user-error-messages.service";
@@ -216,6 +216,7 @@ export class NewUserComponent implements OnInit {
           this.secondFormGroup,
           this.calcAgeService.calculateAge(this.firstFormGroup.get("dob").value)
         );
+        this.setSessionStorage(this.firstFormGroup, this.secondFormGroup);
         this.stepper.next();
       }
     } else {
@@ -267,6 +268,7 @@ export class NewUserComponent implements OnInit {
           this.secondFormGroup,
           this.calcAgeService.calculateAge(this.firstFormGroup.get("dob").value)
         );
+        this.setSessionStorage(this.firstFormGroup, this.secondFormGroup);
         this.stepper.next();
       }
     }
@@ -288,5 +290,61 @@ export class NewUserComponent implements OnInit {
       this.secondFormGroup.reset();
       this.stepper.selectedIndex = 0;
     });
+  }
+
+  setSessionStorage(firstFormGroup: FormGroup, secondFormGroup: FormGroup) {
+    var customerDetails = new Customer();
+    customerDetails.firstName = firstFormGroup.get("firstName").value;
+    customerDetails.lastName = firstFormGroup.get("lastName").value;
+    customerDetails.dob = firstFormGroup.get("dob").value;
+    customerDetails.email = firstFormGroup.get("email").value;
+    customerDetails.phoneNumber = firstFormGroup.get("phoneNumber").value;
+    var employmentType = firstFormGroup.get("employmentType").value;
+    customerDetails.employmentType =
+      employmentType == 1 ? "Salaried" : "Self Employment";
+
+    if (employmentType == 1) {
+      customerDetails.overallExp = secondFormGroup
+        .get("salariedForm")
+        .get("experienceDetails")
+        .get("overallExp").value;
+
+      customerDetails.currentCompanyExp = secondFormGroup
+        .get("salariedForm")
+        .get("experienceDetails")
+        .get("currentCompanyExp").value;
+
+      customerDetails.incomePerMonth = secondFormGroup
+        .get("salariedForm")
+        .get("incomeDetails")
+        .get("incomePerMmonth").value;
+
+      customerDetails.emiPerMonth = secondFormGroup
+        .get("salariedForm")
+        .get("incomeDetails")
+        .get("emiPerMonth").value;
+    } else {
+      customerDetails.overallExp = secondFormGroup
+        .get("selfEmploymentForm")
+        .get("experience").value;
+
+      customerDetails.incomePerAnnum = secondFormGroup
+        .get("selfEmploymentForm")
+        .get("incomePerAnnum").value;
+
+      customerDetails.emiPerMonth = secondFormGroup
+        .get("selfEmploymentForm")
+        .get("emiPerMonth").value;
+
+      customerDetails.residenceOwned = secondFormGroup
+        .get("selfEmploymentForm")
+        .get("residenceOwned").value;
+      customerDetails.officeOwned = secondFormGroup
+        .get("selfEmploymentForm")
+        .get("officeOwned").value;
+    }
+
+    sessionStorage.setItem("customerDetails", JSON.stringify(customerDetails));
+    console.log(sessionStorage.getItem("customerDetails"));
   }
 }
