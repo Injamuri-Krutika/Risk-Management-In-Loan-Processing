@@ -1,0 +1,31 @@
+.buttonRight {
+    float: right;
+    margin: 10px;
+
+  }
+  .field{
+   font-size: 16px;
+   color:blue;
+   
+  }
+  .input{
+    margin-left:50%;
+  }
+  .main{
+    
+      width: 800px;
+      height: 350px;
+      padding: 30px; 
+      border: 3px solid;
+      margin: 80px;
+      position: fixed;
+      margin-left:18%;
+      
+       
+      
+  }
+  .f2{
+    margin-left:50%;
+   
+  }
+  

@@ -22,3 +22,9 @@ export class LoanParameters {
   roi: number;
   emi: number;
 }
+export class FileParameters {
+  fileName: string;
+  type: string;
+  value: string|any;
+
+}

@@ -1,3 +1,119 @@
-<p>
-  upload-documents works!
-</p>
+<!-- <mat-card class="new-user-div">
+  <form name="upload">
+    <ng-template matStepLabel>Upload Documents</ng-template>
+    <mat-form-field class="example-full-width">
+         <md-button id="uploadButton"
+            class="md-raised md-primary"
+            aria-label="attach_file">
+            Choose file
+        </md-button> -->
+        
+        
+        <!-- <input type="file" (change)="onFileSelected($event)">
+  -->
+  <!-- <button mat-raised-button
+  
+  formControlName="file"
+  aria-placeholder="choose file"
+  required>chooseFile</button> -->
+
+    <!-- <button mat-button color="warn" (click)="onClick()">
+      <mat-icon>file_upload</mat-icon>
+      {{text}}
+</button> -->
+
+
+
+
+        <!-- <md-input-container md-no-float>
+            <input id="textInput" ng-model="fileName" type="text" placeholder="No file chosen" ng-readonly="true">
+        </md-input-container>   -->
+       
+      <!-- <md-button md-no-ink class="md-primary">Primary (md-noink)</md-button> -->
+    
+    <!-- <div>
+        <button
+          mat-button
+          class="buttonRight"
+          [disabled]="formGroup.invalid"
+        >
+          Next
+        </button>
+    </div> -->
+
+   
+  <!--</mat-form-field>
+</form>
+
+      <div ng-controller="AppCtrl" layout="column" ng-cloak="" ng-app="MyApp">
+
+        <md-content layout-padding layout="row" layout-align="start end">
+          <aps-upload-file></aps-upload-file>
+        </md-content>
+      
+      </div> 
+    </mat-card> -->
+
+<!-- <div class="main">
+	<h2>UPLOAD DOCUMENTS</h2>
+	<div class="submain" (onSubmit)="">
+   <form name="upload">
+    <span class="field"> Upload Adhar </span>
+      <input type="file" name="adhar" class="input" accept=".pdf"><br>
+      <span class="field"> Upload PAN Card </span>
+      <input type="file" name="pan" class="input" accept=".pdf" ><br>
+      <span class="field"> Upload Last six Months Bank Payment History </span>
+      <input type="file" name="adhar" class="input" accept=".pdf" >
+      <input type="submit" value="upload">
+
+</form>
+</div>
+</div>
+ -->
+ <div class = "main">
+ <form [formGroup]="form" (ngSubmit)="onSubmit()" >
+  <div class="form-group">
+    <label for="adhar">Adhar</label>
+    <div class="f2" >
+    <input type="file" id="adhar" (change)="onFileChange($event)" accept=".pdf" #fileInput>
+    <button type="button" class="btn btn-sm btn-default" (click)="clearFileAdhar($event)">clear file</button>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="pan">PAN</label>
+    <div class="f2" >
+    <input type="file" id="pan" (change)="onFileChange($event)" accept=".pdf" #fileInput>
+    <button type="button" class="btn btn-sm btn-default" (click)="clearFilePan(this)">clear file</button>
+  </div>
+  </div>
+  <div class="form-group">
+    <label for="bs">Bank Statements</label>
+    <div class="f2" >
+    <input type="file" id="bs" (change)="onFileChange($event)" accept=".pdf" #fileInput>
+    <button type="button" class="btn btn-sm btn-default" (click)="clearFileBankStmts(this)">clear file</button>
+  </div>
+  </div>
+  <div class="form-group">
+    <label for="ip">Identity Proof</label>
+    <div class="f2" >
+    <input type="file" id="ip" (change)="onFileChange($event)" accept=".pdf" #fileInput>
+    <button type="button" class="btn btn-sm btn-default" (click)="clearFileID(this)">clear file</button>
+  </div>
+  </div>
+  <div class="form-group">
+    <label for="pr">Proof Of Residence</label>
+    <div class="f2" >
+    <input type="file" id="pr" (change)="onFileChange($event)" accept=".pdf" #fileInput>
+    <button type="button" class="btn btn-sm btn-default" (click)="clearFileProofRes(this)">clear file</button>
+  </div>
+  </div>
+  <div class="form-group">
+    <label for="pp">Proof Of Property</label>
+    <div class="f2" >
+    <input type="file" id="pp" (change)="onFileChange($event)" accept=".pdf" #fileInput>
+    <button type="button" class="btn btn-sm btn-default" (click)="clearFileProofPro(this)">clear file</button>
+  </div>
+  </div>
+  <button style="text-align: center;" type="submit" [disabled]="form.invalid || loading" class="btn btn-success">Submit <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i></button>
+</form>
+ </div>
