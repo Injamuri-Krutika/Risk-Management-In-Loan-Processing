@@ -7,7 +7,8 @@ import { UploadDocumentsComponent } from "./upload-documents/upload-documents.co
 import { LoginComponent } from "./login/login.component";
 import { RegistrationComponent } from "./registration/registration.component";
 import { AfterRegistrationComponent } from "./after-registration/after-registration.component";
-import { CustomerDashboardComponent } from "./customer-dashboard/customer-dashboard.component";
+import { CustomersDashboardComponent } from "./customers-dashboard/customers-dashboard.component";
+import { CreditApproverDashboardComponent } from "./credit-approver-dashboard/credit-approver-dashboard.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "/basic", pathMatch: "full" },
@@ -18,7 +19,11 @@ const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "register", component: RegistrationComponent },
   { path: "success-registeration", component: AfterRegistrationComponent },
-  { path: "customer-dashboard", component: CustomerDashboardComponent }
+  { path: "customer-dashboard", component: CustomersDashboardComponent },
+  {
+    path: "credit-approver-dashboard",
+    component: CreditApproverDashboardComponent
+  }
 ];
 
 @NgModule({

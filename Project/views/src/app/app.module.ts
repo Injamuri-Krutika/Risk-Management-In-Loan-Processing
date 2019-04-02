@@ -22,6 +22,7 @@ import { CustomerDashboardComponent } from './customer-dashboard/customer-dashbo
 import { CustomersDashboardComponent } from './customers-dashboard/customers-dashboard.component';
 import { MatGridListModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
+import { CreditApproverDashboardComponent } from './credit-approver-dashboard/credit-approver-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     RegistrationComponent,
     AfterRegistrationComponent,
     CustomerDashboardComponent,
-    CustomersDashboardComponent
+    CustomersDashboardComponent,
+    CreditApproverDashboardComponent
   ],
   entryComponents: [IneligibleDialogueComponent],
   imports: [
