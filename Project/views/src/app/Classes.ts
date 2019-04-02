@@ -14,6 +14,24 @@ export class Customer {
   incomePerAnnum: string;
   residenceOwned: string;
   officeOwned: string;
+  aadhar: Blob;
+  pan: Blob;
+  bankStatements: Blob;
+  residenceProof: Blob;
+  propertyProof: Blob;
+  password: string;
+  eligibleLoanAmount: number;
+  tenure: number;
+  roi: number;
+  loanEMI: number;
+}
+
+export class CustomerFiles {
+  aadhar: Blob;
+  pan: Blob;
+  bankStatements: Blob;
+  residenceProof: Blob;
+  propertyProof: Blob;
 }
 
 export class IneligibilityInformation {
@@ -32,6 +50,5 @@ export class LoanParameters {
 export class FileParameters {
   fileName: string;
   type: string;
-  value: string|any;
-
+  value: string | any;
 }
