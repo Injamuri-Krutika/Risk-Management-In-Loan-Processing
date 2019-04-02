@@ -2,11 +2,13 @@ const Eligibility = require("../models/eligibility.model");
 
 //get
 exports.eligibilityDetails = function(req, res) {
-  age = parseInt(req.params.age);
-  id = parseInt(req.params.id);
+  let age = parseInt(req.params.age);
+  let id = parseInt(req.params.id);
+  console.log(age, id);
   Eligibility.find({ eligibilityId: id }).exec((err, eligibility) => {
     if (err) return next(err);
-    record = eligibility[0];
+    console.log(eligibility);
+    let record = eligibility[0];
     if (record)
       if (record.minAge <= age && age <= record.maxAge) res.send(record);
       else res.send({ isInEligible: true });
@@ -27,6 +29,7 @@ exports.eligibilityCreate = function(req, res, next) {
     netTakeHome: req.body.netTakeHome
   });
 
+  console.log(eligibility);
   eligibility.save(function(err) {
     if (err) {
       return next(err);
