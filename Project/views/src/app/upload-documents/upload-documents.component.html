@@ -7,31 +7,27 @@
             aria-label="attach_file">
             Choose file
         </md-button> -->
-        
-        
-        <!-- <input type="file" (change)="onFileSelected($event)">
+
+<!-- <input type="file" (change)="onFileSelected($event)">
   -->
-  <!-- <button mat-raised-button
+<!-- <button mat-raised-button
   
   formControlName="file"
   aria-placeholder="choose file"
   required>chooseFile</button> -->
 
-    <!-- <button mat-button color="warn" (click)="onClick()">
+<!-- <button mat-button color="warn" (click)="onClick()">
       <mat-icon>file_upload</mat-icon>
       {{text}}
 </button> -->
 
-
-
-
-        <!-- <md-input-container md-no-float>
+<!-- <md-input-container md-no-float>
             <input id="textInput" ng-model="fileName" type="text" placeholder="No file chosen" ng-readonly="true">
         </md-input-container>   -->
-       
-      <!-- <md-button md-no-ink class="md-primary">Primary (md-noink)</md-button> -->
-    
-    <!-- <div>
+
+<!-- <md-button md-no-ink class="md-primary">Primary (md-noink)</md-button> -->
+
+<!-- <div>
         <button
           mat-button
           class="buttonRight"
@@ -41,8 +37,7 @@
         </button>
     </div> -->
 
-   
-  <!--</mat-form-field>
+<!--</mat-form-field>
 </form>
 
       <div ng-controller="AppCtrl" layout="column" ng-cloak="" ng-app="MyApp">
@@ -70,50 +65,136 @@
 </div>
 </div>
  -->
- <div class = "main">
- <form [formGroup]="form" (ngSubmit)="onSubmit()" >
-  <div class="form-group">
-    <label for="adhar">Adhar</label>
-    <div class="f2" >
-    <input type="file" id="adhar" (change)="onFileChange($event)" accept=".pdf" #fileInput>
-    <button type="button" class="btn btn-sm btn-default" (click)="clearFileAdhar($event)">clear file</button>
+
+<div class="main">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="adhar">Adhar</label>
+      <div class="f2">
+        <input
+          type="file"
+          id="adhar"
+          formControlName="adhar"
+          (change)="onFileChange($event, 'adhar')"
+          accept=".pdf"
+          #fileInput
+        />
+        <button
+          type="button"
+          class="btn btn-sm btn-default"
+          (click)="clearFileAdhar($event)"
+        >
+          clear file
+        </button>
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="pan">PAN</label>
-    <div class="f2" >
-    <input type="file" id="pan" (change)="onFileChange($event)" accept=".pdf" #fileInput>
-    <button type="button" class="btn btn-sm btn-default" (click)="clearFilePan(this)">clear file</button>
-  </div>
-  </div>
-  <div class="form-group">
-    <label for="bs">Bank Statements</label>
-    <div class="f2" >
-    <input type="file" id="bs" (change)="onFileChange($event)" accept=".pdf" #fileInput>
-    <button type="button" class="btn btn-sm btn-default" (click)="clearFileBankStmts(this)">clear file</button>
-  </div>
-  </div>
-  <div class="form-group">
-    <label for="ip">Identity Proof</label>
-    <div class="f2" >
-    <input type="file" id="ip" (change)="onFileChange($event)" accept=".pdf" #fileInput>
-    <button type="button" class="btn btn-sm btn-default" (click)="clearFileID(this)">clear file</button>
-  </div>
-  </div>
-  <div class="form-group">
-    <label for="pr">Proof Of Residence</label>
-    <div class="f2" >
-    <input type="file" id="pr" (change)="onFileChange($event)" accept=".pdf" #fileInput>
-    <button type="button" class="btn btn-sm btn-default" (click)="clearFileProofRes(this)">clear file</button>
-  </div>
-  </div>
-  <div class="form-group">
-    <label for="pp">Proof Of Property</label>
-    <div class="f2" >
-    <input type="file" id="pp" (change)="onFileChange($event)" accept=".pdf" #fileInput>
-    <button type="button" class="btn btn-sm btn-default" (click)="clearFileProofPro(this)">clear file</button>
-  </div>
-  </div>
-  <button style="text-align: center;" type="submit" [disabled]="form.invalid || loading" class="btn btn-success">Submit <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i></button>
-</form>
- </div>
+    <div class="form-group">
+      <label for="pan">PAN</label>
+      <div class="f2">
+        <input
+          type="file"
+          id="pan"
+          formControlName="pan"
+          (change)="onFileChange($event, 'pan')"
+          accept=".pdf"
+          #fileInput
+        />
+        <button
+          type="button"
+          class="btn btn-sm btn-default"
+          (click)="clearFilePan($event)"
+        >
+          clear file
+        </button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="bs">Bank Statements</label>
+      <div class="f2">
+        <input
+          type="file"
+          id="bs"
+          formControlName="bs"
+          (change)="onFileChange($event, 'bs')"
+          accept=".pdf"
+          #fileInput
+        />
+        <button
+          type="button"
+          class="btn btn-sm btn-default"
+          (click)="clearFileBankStmts($event)"
+        >
+          clear file
+        </button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="ip">Identity Proof</label>
+      <div class="f2">
+        <input
+          type="file"
+          id="ip"
+          formControlName="ip"
+          (change)="onFileChange($event, 'ip')"
+          accept=".pdf"
+          #fileInput
+        />
+        <button
+          type="button"
+          class="btn btn-sm btn-default"
+          (click)="clearFileID($event)"
+        >
+          clear file
+        </button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="pr">Proof Of Residence</label>
+      <div class="f2">
+        <input
+          type="file"
+          id="pr"
+          formControlName="pr"
+          (change)="onFileChange($event, 'pr')"
+          accept=".pdf"
+          #fileInput
+        />
+        <button
+          type="button"
+          class="btn btn-sm btn-default"
+          (click)="clearFileProofRes($event)"
+        >
+          clear file
+        </button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="pp">Proof Of Property</label>
+      <div class="f2">
+        <input
+          type="file"
+          id="pp"
+          formControlName="pp"
+          (change)="onFileChange($event, 'pp')"
+          accept=".pdf"
+          #fileInput
+        />
+        <button
+          type="button"
+          class="btn btn-sm btn-default"
+          (click)="clearFileProofPro($event)"
+        >
+          clear file
+        </button>
+      </div>
+    </div>
+    <button
+      style="text-align: center;"
+      type="submit"
+      [disabled]="form.invalid || loading"
+      class="btn btn-success"
+    >
+      Submit <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i>
+    </button>
+  </form>
+</div>
