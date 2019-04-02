@@ -3,6 +3,9 @@ const bodyParser = require("body-parser");
 const path = require("path");
 var cors = require("cors");
 const eligibility = require("./routes/eligibility.route"); // Imports routes for the products
+const registration = require("./routes/register.route"); // Imports routes for the products
+const confirmation = require("./routes/confirmation.route"); // Imports routes for the products
+const login = require("./routes/login.route"); // Imports routes for the products
 
 const distPath = path.join(__dirname, "/npviews/dist/Project");
 const port = 8000;
@@ -11,9 +14,7 @@ const app = express();
 
 // Set up mongoose connection
 const mongoose = require("mongoose");
-let dev_db_url =
-  // "mongodb+srv://loan_processing:loan123@loanprocessing-wlptx.mongodb.net/test?retryWrites=true";
-  "mongodb://localhost:27017/loanProcessing";
+let dev_db_url = "mongodb://localhost:27017/loanProcessingNew";
 let mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
@@ -25,6 +26,9 @@ db.once("open", function callback() {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use("/know-eligibility", eligibility);
+  app.use("/register", registration);
+  app.use("/confirm", confirmation);
+  app.use("/login", login);
 
   // app.get("/", (req, res) => {
   //   res.sendFile(distPath + "index.html");
