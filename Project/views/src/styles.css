@@ -13,3 +13,20 @@ body {
 .mat-horizontal-stepper-header {
   pointer-events: none !important;
 }
+
+.form-card {
+  width: 500px;
+  margin: auto;
+  margin-top: 50px;
+  text-align: center;
+}
+
+.heading {
+  margin: 20px;
+  text-align: center;
+  color: indigo;
+}
+
+.margin {
+  margin-bottom: 15px;
+}
