@@ -216,7 +216,11 @@ export class NewUserComponent implements OnInit {
           this.secondFormGroup,
           this.calcAgeService.calculateAge(this.firstFormGroup.get("dob").value)
         );
-        this.setSessionStorage(this.firstFormGroup, this.secondFormGroup);
+        this.setSessionStorage(
+          this.firstFormGroup,
+          this.secondFormGroup,
+          this.loanParameters
+        );
         this.stepper.next();
       }
     } else {
@@ -268,7 +272,11 @@ export class NewUserComponent implements OnInit {
           this.secondFormGroup,
           this.calcAgeService.calculateAge(this.firstFormGroup.get("dob").value)
         );
-        this.setSessionStorage(this.firstFormGroup, this.secondFormGroup);
+        this.setSessionStorage(
+          this.firstFormGroup,
+          this.secondFormGroup,
+          this.loanParameters
+        );
         this.stepper.next();
       }
     }
@@ -279,12 +287,7 @@ export class NewUserComponent implements OnInit {
       width: "500px",
       data: { firstName: firstName, lastName: lastName, reason: reason }
     });
-    if (formNumber == 1) {
-      dialogRef.afterClosed().subscribe(result => {
-        this.firstFormGroup.reset();
-      });
-    } else if (formNumber == 2) {
-    }
+
     dialogRef.afterClosed().subscribe(result => {
       this.firstFormGroup.reset();
       this.secondFormGroup.reset();
@@ -292,13 +295,22 @@ export class NewUserComponent implements OnInit {
     });
   }
 
-  setSessionStorage(firstFormGroup: FormGroup, secondFormGroup: FormGroup) {
+  setSessionStorage(
+    firstFormGroup: FormGroup,
+    secondFormGroup: FormGroup,
+    loanParameters: LoanParameters
+  ) {
     var customerDetails = new Customer();
     customerDetails.firstName = firstFormGroup.get("firstName").value;
     customerDetails.lastName = firstFormGroup.get("lastName").value;
     customerDetails.dob = firstFormGroup.get("dob").value;
     customerDetails.email = firstFormGroup.get("email").value;
     customerDetails.phoneNumber = firstFormGroup.get("phoneNumber").value;
+    customerDetails.eligibleLoanAmount = loanParameters.loanAmount;
+    customerDetails.tenure = loanParameters.tenure;
+    customerDetails.roi = loanParameters.roi;
+    customerDetails.loanEMI = loanParameters.emi;
+
     var employmentType = firstFormGroup.get("employmentType").value;
     customerDetails.employmentType =
       employmentType == 1 ? "Salaried" : "Self Employment";
@@ -343,7 +355,7 @@ export class NewUserComponent implements OnInit {
         .get("selfEmploymentForm")
         .get("officeOwned").value;
     }
-
+    console.log(customerDetails);
     sessionStorage.setItem("customerDetails", JSON.stringify(customerDetails));
     console.log(sessionStorage.getItem("customerDetails"));
   }
