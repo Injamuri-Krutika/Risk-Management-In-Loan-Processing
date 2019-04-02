@@ -1,0 +1,49 @@
+<div class="login-div">
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <mat-card class="form-card">
+      <mat-card-title class="heading">Login</mat-card-title>
+      <mat-form-field appearance="outline" class="margin">
+        <mat-label>User Name</mat-label>
+        <input
+          matInput
+          placeholder=""
+          formControlName="user"
+          required
+          minlength="4"
+        />
+        <mat-icon matSuffix>face</mat-icon
+        ><mat-error>
+          Enter a valid user name
+        </mat-error> </mat-form-field
+      ><br />
+      <mat-form-field appearance="outline" class="margin">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          placeholder=""
+          type="password"
+          formControlName="password"
+          required
+        />
+        <mat-icon matSuffix>lock</mat-icon>
+        <mat-error>
+          Enter a valid password
+        </mat-error></mat-form-field
+      ><br />
+      <mat-error *ngIf="message">{{ message }}</mat-error>
+      <br />
+      <button mat-raised-button color="primary" [disabled]="!profileForm.valid">
+        Login
+      </button>
+      <button
+        mat-raised-button
+        type="button"
+        color="primary"
+        class="pad"
+        routerLink="/new-user"
+      >
+        Register
+      </button>
+    </mat-card>
+  </form>
+</div>
