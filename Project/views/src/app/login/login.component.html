@@ -11,10 +11,7 @@
           required
           minlength="4"
         />
-        <mat-icon matSuffix>face</mat-icon
-        ><mat-error>
-          Enter a valid user name
-        </mat-error> </mat-form-field
+        <mat-icon matSuffix>face</mat-icon></mat-form-field
       ><br />
       <mat-form-field appearance="outline" class="margin">
         <mat-label>Password</mat-label>
@@ -25,10 +22,7 @@
           formControlName="password"
           required
         />
-        <mat-icon matSuffix>lock</mat-icon>
-        <mat-error>
-          Enter a valid password
-        </mat-error></mat-form-field
+        <mat-icon matSuffix>lock</mat-icon> </mat-form-field
       ><br />
       <mat-error *ngIf="message">{{ message }}</mat-error>
       <br />
