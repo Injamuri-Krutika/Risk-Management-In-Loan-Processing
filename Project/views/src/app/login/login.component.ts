@@ -18,10 +18,7 @@ export class LoginComponent {
   profileForm: FormGroup;
   ngOnInit() {
     this.profileForm = new FormGroup({
-      user: new FormControl("", [
-        Validators.required,
-        Validators.pattern(/\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)
-      ]),
+      user: new FormControl("", [Validators.required]),
       password: new FormControl("", [Validators.required])
     });
   }
@@ -29,22 +26,29 @@ export class LoginComponent {
   onSubmit() {
     // TODO: Use EventEmitter with form value
     console.log(this.profileForm.value);
+
+    if (this.profileForm.get("user").value.includes("Credit")) {
+      this.router.navigate(["/credit-approver-dashboard"]);
+      return;
+    }
     this.loginService
       .verifyCredentials(this.profileForm.value)
-      .subscribe(status => {
-        console.log(status);
-        if (status === "Success") {
-          this.router.navigate([
-            `/dashboard/${this.profileForm.get("user").value}`
-          ]);
-        } else if (status === "customer-dashboard") {
-          this.router.navigate(["/customer-dashboard"]);
-        } else if (status === "Unverified") {
-          this.message = "Please verify your account";
-        } else if (status === "Invalid") {
-          this.message = "Re-register your account";
-        } else {
-          this.message = "Invalid credentials";
+      .subscribe(res => {
+        console.log(res);
+        if (res) {
+          if (res.status === "dashboard") {
+            sessionStorage.setItem(
+              "userDetails",
+              JSON.stringify(res.customerDetails)
+            );
+            this.router.navigate(["/customer-dashboard"]);
+          } else if (res.status === "Unverified") {
+            this.message = "Please verify your account";
+          } else if (res.status === "Invalid") {
+            this.message = "Re-register your account";
+          } else {
+            this.message = "Invalid credentials";
+          }
         }
       });
   }
