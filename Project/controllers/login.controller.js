@@ -13,18 +13,17 @@ exports.verifyCredentials = (request, response) => {
 
       console.log(`here1 ${(doc.password, request.body.password)} `);
       if (doc.password === request.body.password) {
-        if (doc.hasDetails) {
-          console.log("Inside Success");
-          return response.send("Success");
-        }
         if (doc.isVerified) {
           console.log("Inside Is verified");
-          return response.send("customer-dashboard");
+          return response.send({
+            status: "dashboard",
+            customerDetails: doc
+          });
         }
-        return response.send("Unverified");
+        return response.send({ status: "Unverified" });
       }
-      return response.send("Bad Credentials");
+      return response.send({ status: "Bad Credentials" });
     }
-    return response.send("Invalid");
+    return response.send({ status: "Invalid" });
   });
 };

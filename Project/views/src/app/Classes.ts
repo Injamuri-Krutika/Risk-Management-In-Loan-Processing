@@ -24,6 +24,8 @@ export class Customer {
   tenure: number;
   roi: number;
   loanEMI: number;
+  loanStatus: string;
+  requestDate: string;
 }
 
 export class CustomerFiles {
@@ -51,4 +53,9 @@ export class FileParameters {
   fileName: string;
   type: string;
   value: string | any;
+}
+
+export class LoginResponse {
+  status: string;
+  customerDetails: object;
 }

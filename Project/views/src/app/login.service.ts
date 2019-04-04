@@ -22,15 +22,15 @@ export class LoginService {
   };
 
   // URL to web api
-  verifyCredentials(data: any): Observable<string> {
+  verifyCredentials(data: any): Observable<any> {
     return this.http
       .post(this.apiUrl, data, {
         headers: this.httpOptions.headers,
-        responseType: "text"
+        responseType: "json"
       })
       .pipe(
         tap(_ => console.log("Got response")),
-        catchError(this.handleError<string>("verifyCredentials", ""))
+        catchError(this.handleError<any>("verifyCredentials", ""))
       );
   }
 
