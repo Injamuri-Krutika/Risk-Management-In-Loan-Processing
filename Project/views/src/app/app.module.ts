@@ -18,7 +18,6 @@ import { UploadDocumentsComponent } from "./upload-documents/upload-documents.co
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { AfterRegistrationComponent } from './after-registration/after-registration.component';
-import { CustomerDashboardComponent } from './customer-dashboard/customer-dashboard.component';
 import { CustomersDashboardComponent } from './customers-dashboard/customers-dashboard.component';
 import { MatGridListModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -37,7 +36,6 @@ import { CreditApproverDashboardComponent } from './credit-approver-dashboard/cr
     LoginComponent,
     RegistrationComponent,
     AfterRegistrationComponent,
-    CustomerDashboardComponent,
     CustomersDashboardComponent,
     CreditApproverDashboardComponent
   ],
