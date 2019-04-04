@@ -26,7 +26,12 @@ exports.addCustomer = (request, response) => {
     incomePerAnnum: request.body.incomePerAnnum,
     residenceOwned: request.body.residenceOwned,
     officeOwned: request.body.officeOwned,
-    password: request.body.password
+    password: request.body.password,
+    eligibleLoanAmount: request.body.eligibleLoanAmount,
+    tenure: request.body.tenure,
+    roi: request.body.roi,
+    loanEMI: request.body.loanEMI,
+    loanStatus: request.body.loanStatus
   });
   console.log(newCustomer);
   newCustomer.save(err => {

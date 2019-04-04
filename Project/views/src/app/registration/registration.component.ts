@@ -60,6 +60,7 @@ export class RegistrationComponent implements OnInit {
     this.custDetails.password = this.profileForm
       .get("pass")
       .get("password").value;
+    this.custDetails.loanStatus = "Requested";
     console.log(this.custDetails);
     this.registerService.registeration(this.custDetails).subscribe(status => {
       if (status === "Saved") {
