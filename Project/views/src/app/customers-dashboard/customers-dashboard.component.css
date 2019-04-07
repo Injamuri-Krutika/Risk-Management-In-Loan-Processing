@@ -19,3 +19,38 @@
 .dashboard-card-content {
   text-align: center;
 }
+
+.dashboard-card-new {
+  width: 800px;
+  margin: auto;
+  margin-top: 50px;
+  text-align: center;
+  background-color: #f5f5fc;
+}
+
+/* cellpadding */
+th,
+td {
+  padding: 5px;
+}
+
+/* cellspacing */
+table {
+  border-collapse: separate;
+  border-spacing: 5px;
+} /* cellspacing="5" */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+} /* cellspacing="0" */
+
+/* valign */
+th,
+td {
+  vertical-align: top;
+}
+
+/* align (center) */
+table {
+  margin: 0 auto;
+}
