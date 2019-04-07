@@ -47,23 +47,27 @@ export class CalculateLoanParametersService {
       tenure = ageTenure[lastAge][formNumber - 1];
     }
 
+    loanParameters.tenure = tenure;
+    loanParameters.roi = roi;
+    loanParameters.emi = this.calculateEMI(roi, tenure, loanAmount);
+    loanParameters.loanAmount = loanAmount;
+    return loanParameters;
+  }
+
+  calculateEMI(roi, tenure, loanAmount) {
     var n = 12;
     var r = roi / (n * 100);
     var year = tenure;
+    console.log(tenure);
+    console.log(
+      Math.pow(1 + r, n * year) * loanAmount * r,
+      Math.pow(1 + r, n * year - 1)
+    );
     var A =
       (Math.pow(1 + r, n * year) * loanAmount * r) /
       Math.pow(1 + r, n * year - 1);
+    console.log(A);
     var emi = A.toFixed(2);
-
-    //[P x R x (1+R)^N]/[(1+R)^ (N-1)],
-    // var emi =
-    //   (loanAmount * roiPerMonth * Math.pow(1 + roi, tenureInMonths)) /
-    //   Math.pow(1 + roiPerMonth, tenureInMonths - 1);
-
-    loanParameters.tenure = tenure;
-    loanParameters.roi = roi;
-    loanParameters.emi = parseInt(emi);
-    loanParameters.loanAmount = loanAmount;
-    return loanParameters;
+    return parseInt(emi);
   }
 }
