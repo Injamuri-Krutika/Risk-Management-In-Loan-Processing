@@ -26,6 +26,17 @@ export class Customer {
   loanEMI: number;
   loanStatus: string;
   requestDate: string;
+  finalLoanAmount: number;
+  finalTenure: number;
+  finalEMI: number;
+}
+
+export class CreditApprover {
+  firstName: string;
+  lastName: string;
+  dob: string;
+  email: string;
+  phoneNumber: number;
 }
 
 export class CustomerFiles {

@@ -9,6 +9,7 @@ import {
 } from "@angular/forms";
 import { RegisterService } from "../register.service";
 import { DISABLED } from "@angular/forms/src/model";
+import { CalculateLoanParametersService } from "../calculate-loan-parameters.service";
 
 @Component({
   selector: "app-registration",
@@ -19,7 +20,8 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private registerService: RegisterService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private calcLoanParamsService: CalculateLoanParametersService
   ) {}
   custDetails = JSON.parse(sessionStorage.getItem("customerDetails"));
 
@@ -52,7 +54,15 @@ export class RegistrationComponent implements OnInit {
     loanAmount: new FormControl(this.custDetails.eligibleLoanAmount, [
       Validators.required,
       Validators.max(this.custDetails.eligibleLoanAmount)
-    ])
+    ]),
+    updatedTenure: new FormControl(this.custDetails.tenure, [
+      Validators.required,
+      Validators.max(this.custDetails.tenure)
+    ]),
+    updatedEMI: new FormControl({
+      value: this.custDetails.loanEMI,
+      disabled: true
+    })
   });
 
   onSubmit() {
@@ -61,6 +71,9 @@ export class RegistrationComponent implements OnInit {
       .get("pass")
       .get("password").value;
     this.custDetails.loanStatus = "Requested";
+    this.custDetails.finalLoanAmount = this.profileForm.get("loanAmount").value;
+    // this.custDetails.finalTenure = this.profileForm.get("updatedTenure");
+    this.custDetails.finalEMI = this.profileForm.get("updatedEMI").value;
     console.log(this.custDetails);
     this.registerService.registeration(this.custDetails).subscribe(status => {
       if (status === "Saved") {
@@ -76,5 +89,20 @@ export class RegistrationComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  updateEMI() {
+    if (
+      this.profileForm.get("updatedTenure").valid &&
+      this.profileForm.get("loanAmount").valid
+    ) {
+      console.log(this.profileForm.get("updatedTenure").value);
+      var emi = this.calcLoanParamsService.calculateEMI(
+        8.65,
+        parseInt(this.profileForm.get("updatedTenure").value),
+        parseInt(this.profileForm.get("loanAmount").value)
+      );
+      this.profileForm.get("updatedEMI").setValue(emi);
+    }
   }
 }

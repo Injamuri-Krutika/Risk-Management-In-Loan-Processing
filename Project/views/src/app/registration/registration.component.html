@@ -56,11 +56,42 @@
         formControlName="loanAmount"
         required
         numberOnly
+        (keyup)="updateEMI()"
       />
       <!-- <mat-icon matSuffix>face</mat-icon> -->
       <mat-error>
-        Loan Amount should not exceed Eligible Loan Amount.
+        Loan Amount should not exceed Eligible Loan Amount of
+        {{ custDetails.eligibleLoanAmount | currency: "INR":true }}.
       </mat-error> </mat-form-field
+    ><br />
+
+    <mat-form-field appearance="outline" class="margin">
+      <mat-label>Tenure</mat-label>
+      <input
+        matInput
+        placeholder=""
+        formControlName="updatedTenure"
+        required
+        numberOnly
+        (keyup)="updateEMI()"
+      />
+      <!-- <mat-icon matSuffix>face</mat-icon> -->
+      <mat-error>
+        Tenure cannot exceed
+        {{ custDetails.tenure }} years.
+      </mat-error> </mat-form-field
+    ><br />
+
+    <mat-form-field appearance="outline" class="margin">
+      <mat-label>EMI per month</mat-label>
+      <input
+        matInput
+        placeholder=""
+        formControlName="updatedEMI"
+        required
+        numberOnly
+      />
+      <!-- <mat-icon matSuffix>face</mat-icon> --> </mat-form-field
     ><br />
     <button mat-raised-button color="primary" [disabled]="!profileForm.valid">
       Apply Loan
