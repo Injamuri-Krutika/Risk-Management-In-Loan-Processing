@@ -1,24 +1,288 @@
 <div class="grid-container">
   <h1 class="mat-h1">Dashboard</h1>
-  <mat-grid-list cols="2" rowHeight="350px">
-    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-            {{card.title}}
-            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-              <button mat-menu-item>Expand</button>
-              <button mat-menu-item>Remove</button>
-            </mat-menu>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="dashboard-card-content">
-          <div>Card Content Here</div>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+
+  <mat-accordion>
+    <mat-expansion-panel
+      (opened)="panelOpenState1 = true"
+      (closed)="panelOpenState1 = false"
+      style="margin-top:30px;"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Personal data
+        </mat-panel-title>
+        <mat-panel-description>
+          Click here to
+          {{ panelOpenState1 ? "minimise" : "look at your personal details" }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <table>
+        <tbody>
+          <tr>
+            <td style="text-align: right;padding-left:80px;">First Name:</td>
+            <td style="text-align: left">{{ creditApprover.firstName }}</td>
+
+            <td style="text-align: right;padding-left:80px;">
+              Date of Birth:
+            </td>
+            <td style="text-align: left">{{ creditApprover.dob | date }}</td>
+          </tr>
+          <tr>
+            <td style="text-align: right">Last Name:</td>
+            <td style="text-align: left">{{ creditApprover.lastName }}</td>
+          </tr>
+          <tr>
+            <td style="text-align: right">Email Id:</td>
+            <td style="text-align: left">{{ creditApprover.email }}</td>
+          </tr>
+          <tr>
+            <td style="text-align: right">Mobile Number:</td>
+            <td style="text-align: left">
+              {{ creditApprover.phoneNumber }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel
+      [expanded]="panelOpenState === true"
+      (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false"
+      style="margin-top:30px;"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Loan Details
+        </mat-panel-title>
+        <mat-panel-description>
+          Click here to
+          {{ panelOpenState ? "close" : "checkout applied loans" }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <table
+        mat-table
+        [dataSource]="appliedLoans"
+        class="mat-elevation-z8"
+        style="width:100%"
+        *ngIf="appliedLoans.length > 0"
+      >
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="requestId">
+          <th mat-header-cell *matHeaderCellDef>Request ID</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let i = index"
+            (click)="verifyDetails(i)"
+            style="cursor:pointer;"
+            href=""
+          >
+            {{ element.requestId }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="requestDate">
+          <th mat-header-cell *matHeaderCellDef>Request Date</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.requestDate | date }}
+          </td>
+        </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef>First Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef>Last Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="finalLoanAmount">
+          <th mat-header-cell *matHeaderCellDef>Loan Amount</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.finalLoanAmount | currency: "INR":true }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tenure">
+          <th mat-header-cell *matHeaderCellDef>Tenure</th>
+          <td mat-cell *matCellDef="let element">{{ element.tenure }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="finalEMI">
+          <th mat-header-cell *matHeaderCellDef>EMI</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.finalEMI | currency: "INR":true }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <p *ngIf="appliedLoans.length == 0">Nothing in Queue!</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <mat-card *ngIf="viewDetails" style="margin-top:30px;">
+    <mat-card-title>{{ viewDetails.requestId }}</mat-card-title>
+    <mat-card-content>
+      <table>
+        <tbody>
+          <tr>
+            <td style="text-align: right;padding-left:80px;">First Name:</td>
+            <td style="text-align: left">
+              {{ viewDetails.firstName }}
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: right">Last Name:</td>
+            <td style="text-align: left">
+              {{ viewDetails.lastName }}
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: right">Date of Birth:</td>
+            <td style="text-align: left">
+              {{ viewDetails.dob }}
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: right">Email Id:</td>
+            <td style="text-align: left">{{ viewDetails.email }}</td>
+          </tr>
+          <tr>
+            <td style="text-align: right">Mobile Number:</td>
+            <td style="text-align: left">
+              {{ viewDetails.phoneNumber }}
+            </td>
+          </tr>
+
+          <tr>
+            <td style="text-align: right">Employment Type:</td>
+            <td style="text-align: left">
+              {{ viewDetails.employmentType }}
+            </td>
+          </tr>
+
+          <tr>
+            <td style="text-align: right">Income:</td>
+            <td style="text-align: left">
+              {{ viewDetails.income | currency: "INR":true }}
+            </td>
+          </tr>
+
+          <tr>
+            <td style="text-align: right">Current EMI per month:</td>
+            <td style="text-align: left">
+              {{ viewDetails.emiPerMonth | currency: "INR":true }}
+            </td>
+          </tr>
+          <tr *ngIf="viewDetails.employmentType == 'Salaried'">
+            <td style="text-align: right">Overall Experience:</td>
+            <td style="text-align: left">
+              {{ viewDetails.overallExp }}
+            </td>
+          </tr>
+          <tr *ngIf="viewDetails.employmentType == 'Salaried'">
+            <td style="text-align: right">Experience in Current Experience:</td>
+            <td style="text-align: left">
+              {{ viewDetails.currentCompanyExp }}
+            </td>
+          </tr>
+          <tr *ngIf="viewDetails.employmentType == 'Salaried'">
+            <td style="text-align: right">Income per month:</td>
+            <td style="text-align: left">
+              {{ viewDetails.incomePerMonth | currency: "INR":true }}
+            </td>
+          </tr>
+          <tr *ngIf="viewDetails.employmentType != 'Salaried'">
+            <td style="text-align: right">Income per Annum:</td>
+            <td style="text-align: left">
+              {{ viewDetails.incomePerAnnum | currency: "INR":true }}
+            </td>
+          </tr>
+          <tr *ngIf="viewDetails.employmentType != 'Salaried'">
+            <td style="text-align: right">Own Residence:</td>
+            <td style="text-align: left">
+              {{ viewDetails.residenceOwned }}
+            </td>
+          </tr>
+          <tr *ngIf="viewDetails.employmentType != 'Salaried'">
+            <td style="text-align: right">Own Office:</td>
+            <td style="text-align: left">
+              {{ viewDetails.officeOwned }}
+            </td>
+          </tr>
+
+          <tr>
+            <td style="text-align: right">Eligible loan amount:</td>
+            <td style="text-align: left">
+              {{ viewDetails.eligibleLoanAmount | currency: "INR":true }}
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: right">Applied loan amount:</td>
+            <td style="text-align: left">
+              {{ viewDetails.finalLoanAmount | currency: "INR":true }}
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: right">Tenure:</td>
+            <td style="text-align: left">
+              {{ viewDetails.tenure }}
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: right">Rate of Interest:</td>
+            <td style="text-align: left">
+              {{ viewDetails.roi }}
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: right">EMI for applied loan:</td>
+            <td style="text-align: left">
+              {{ viewDetails.finalEMI | currency: "INR":true }}
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: right">Loan Status</td>
+            <td style="text-align: left">
+              {{ viewDetails.loanStatus }}
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: right">Requested Date:</td>
+            <td style="text-align: left">
+              {{ viewDetails.requestDate | date }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="
+          updateLoan('Accepted', viewDetails.requestId, viewDetails.email)
+        "
+      >
+        Accept
+      </button>
+      <button
+        mat-raised-button
+        color="warn"
+        style="float:right;"
+        (click)="updateLoan('Rejected')"
+      >
+        Reject
+      </button>
+    </mat-card-content>
+  </mat-card>
 </div>
