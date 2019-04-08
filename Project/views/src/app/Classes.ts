@@ -29,6 +29,8 @@ export class Customer {
   finalLoanAmount: number;
   finalTenure: number;
   finalEMI: number;
+  loanAcceptedDate: string;
+  requestId: string;
 }
 
 export class CreditApprover {
@@ -69,4 +71,20 @@ export class FileParameters {
 export class LoginResponse {
   status: string;
   customerDetails: object;
+}
+
+export class EligibilityDetails {
+  eligibilityId: number;
+  minAge: number;
+  maxAge: number;
+  minIncome: number;
+  maxIncome: number;
+  isInEligible: string;
+  minExperience: number;
+  minCurrentCompanyExperience: number;
+  netTakeHome: number;
+}
+
+export class AppliedLoans {
+  loans: Customer[];
 }
