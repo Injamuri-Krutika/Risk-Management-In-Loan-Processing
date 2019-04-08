@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { Customer } from "./Classes";
-import { EligibilityDetails } from "src/EligibilityDetails";
+import { Customer, EligibilityDetails } from "./Classes";
 import { Observable, of } from "rxjs";
 import { catchError, map, tap } from "rxjs/operators";
 

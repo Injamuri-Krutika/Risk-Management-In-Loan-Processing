@@ -11,14 +11,13 @@ import {
   ValidatorFn
 } from "@angular/forms";
 import { KnowEligibilityService } from "../know-eligibility.service";
-import { EligibilityDetails } from "src/EligibilityDetails";
 import { EmploymentType } from "../Interfaces";
 import { ErrorStateMatcher, MatStepper, MatDialog } from "@angular/material";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 import { IneligibleDialogueComponent } from "../ineligible-dialogue/ineligible-dialogue.component";
 import { stringify } from "@angular/core/src/render3/util";
 import { AGE_TENURE } from "src/app/ageTenure";
-import { LoanParameters, Customer } from "../Classes";
+import { LoanParameters, Customer, EligibilityDetails } from "../Classes";
 import { CustomErrorStateMatcher } from "../CustomErrorStateMatcher";
 import { CustomValidators } from "../CustomValidators";
 import { NewUserErrorMessagesService } from "../new-user-error-messages.service";
