@@ -28,7 +28,9 @@ const CustomersSchema = new mongoose.Schema({
   loanEMI: Number,
   loanStatus: String,
   requestDate: { type: Date, default: Date.now },
-  isVerified: { type: Boolean, default: false }
+  isVerified: { type: Boolean, default: false },
+  loanAcceptedDate: String,
+  requestId: String
 });
 const Customers = mongoose.model("Customers", CustomersSchema, "Customers");
 

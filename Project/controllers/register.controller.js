@@ -34,7 +34,8 @@ exports.addCustomer = (request, response) => {
     tenure: request.body.tenure,
     roi: request.body.roi,
     loanEMI: request.body.loanEMI,
-    loanStatus: request.body.loanStatus
+    loanStatus: request.body.loanStatus,
+    requestId: request.body.requestId
   });
   console.log(newCustomer);
   newCustomer.save(err => {
@@ -53,11 +54,6 @@ exports.addCustomer = (request, response) => {
         request.headers.host
       }/confirm/${token.token}.\n`;
       const to = newCustomer.email;
-      console.log(to);
-      console.log(from);
-      console.log(process.env.FROM_EMAIL);
-      console.log(process.env.PASS);
-
       const smtpTransport = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -88,12 +84,6 @@ exports.deleteCustomer = function(req, res, next) {
   console.log("Inside delete customers");
   Customers.deleteMany({}).exec(err => {
     if (err) return next(err);
-    // console.log(typeof req.params.id);
-    // record = eligibility[0];
-    // age = parseInt(req.params.age);
-    // console.log(record.minAge, age, record.maxAge);
     res.send("Deleted Successfully!");
-    // if (record.minAge < age && age < record.maxAge) res.send(record);
-    // else res.send("Ineligible");
   });
 };

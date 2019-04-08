@@ -72,6 +72,8 @@ export class RegistrationComponent implements OnInit {
       .get("password").value;
     this.custDetails.loanStatus = "Requested";
     this.custDetails.finalLoanAmount = this.profileForm.get("loanAmount").value;
+    this.custDetails.requestId = "RQT-" + this.generate();
+    console.log(JSON.stringify(this.custDetails));
     // this.custDetails.finalTenure = this.profileForm.get("updatedTenure");
     this.custDetails.finalEMI = this.profileForm.get("updatedEMI").value;
     console.log(this.custDetails);
@@ -105,4 +107,24 @@ export class RegistrationComponent implements OnInit {
       this.profileForm.get("updatedEMI").setValue(emi);
     }
   }
+
+  length = 8;
+  timestamp = +new Date();
+
+  _getRandomInt = function(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
+  generate = function() {
+    var ts = this.timestamp.toString();
+    var parts = ts.split("").reverse();
+    var id = "";
+
+    for (var i = 0; i < this.length; ++i) {
+      var index = this._getRandomInt(0, parts.length - 1);
+      id += parts[index];
+    }
+
+    return id;
+  };
 }
