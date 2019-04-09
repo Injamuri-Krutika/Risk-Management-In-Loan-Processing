@@ -1,4 +1,6 @@
 const Customers = require("../models/customers.model");
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
 
 //get
 exports.loanDetails = function(req, res) {
@@ -25,6 +27,8 @@ exports.updateLoanDetails = function(req, res) {
     },
     {
       loanStatus: req.body.loanStatus,
+      // loanStatus: "Requested",
+
       loanAcceptedDate: Date.now
     }
   ).exec((err, loansUpdated) => {
@@ -32,6 +36,31 @@ exports.updateLoanDetails = function(req, res) {
     console.log(loansUpdated);
     let record = { loansUpdated };
     if (record) {
+      console.log("Inside sendEmail");
+      const smtpTransport = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: `${process.env.FROM_EMAIL}@gmail.com`,
+          pass: process.env.PASS
+        }
+      });
+      const from = `${process.env.FROM_EMAIL}@gmail.com`;
+      const message = req.body.message;
+      const to = req.body.email;
+      const mailOptions = {
+        from,
+        to,
+        subject: "Loan Status",
+        text: message
+      };
+      smtpTransport.sendMail(mailOptions, (error, res) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log(`Apparently a success${res}`);
+        }
+      });
+
       res.send(loansUpdated);
       return;
     }
