@@ -4,6 +4,7 @@ import { Breakpoints, BreakpointObserver } from "@angular/cdk/layout";
 import { CreditApprover, Customer } from "../Classes";
 import { LoanDetailsService } from "../loan-details.service";
 import { stringify } from "@angular/core/src/render3/util";
+import { FilesUploadService } from "../files-upload.service";
 
 @Component({
   selector: "app-credit-approver-dashboard",
@@ -34,13 +35,17 @@ export class CreditApproverDashboardComponent implements OnInit {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private loanDetails: LoanDetailsService
+    private loanDetails: LoanDetailsService,
+    private fileService: FilesUploadService
   ) {}
   panelOpenState: boolean = true;
   creditApprover: CreditApprover;
   appliedLoans: Customer[];
   displayedColumns: string[];
   viewDetails: Customer;
+  attachmentList = JSON.parse(sessionStorage.getItem("userDetails"))
+    .attachmentList;
+
   ngOnInit() {
     this.creditApprover = JSON.parse(sessionStorage.getItem("creditApprover"));
     this.loanDetails.getAppliedLoans().subscribe(res => {
@@ -90,5 +95,12 @@ export class CreditApproverDashboardComponent implements OnInit {
         });
       }
     });
+  }
+  download(index, email) {
+    var filename = this.attachmentList[index].uploadname;
+
+    this.fileService
+      .downloadFile(filename, email)
+      .subscribe(data => saveAs(data, filename), error => console.error(error));
   }
 }

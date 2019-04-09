@@ -259,6 +259,19 @@
                 {{ viewDetails.requestDate | date }}
               </td>
             </tr>
+            <tr *ngFor="let file of viewDetails.attachmentList; let i = index">
+              <td style="text-align: right">{{ file.originalname }}:</td>
+              <td style="text-align: left">
+                <button
+                  type="button"
+                  mat-raised-button
+                  color="accent"
+                  (click)="download(i, viewDetails.email)"
+                >
+                  Download
+                </button>
+              </td>
+            </tr>
           </tbody>
         </table>
         <button
