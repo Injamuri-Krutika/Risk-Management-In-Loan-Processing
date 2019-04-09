@@ -80,6 +80,11 @@ export class RegistrationComponent implements OnInit {
     this.registerService.registeration(this.custDetails).subscribe(status => {
       if (status === "Saved") {
         console.log(status);
+        var i = sessionStorage.length;
+        while (i--) {
+          var key = sessionStorage.key(i);
+          sessionStorage.removeItem(key);
+        }
         this.router.navigate(["/success-registeration"]);
       }
     });

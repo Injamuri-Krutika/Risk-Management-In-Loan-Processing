@@ -31,6 +31,7 @@ export class Customer {
   finalEMI: number;
   loanAcceptedDate: string;
   requestId: string;
+  attachmentList: [];
 }
 
 export class CreditApprover {

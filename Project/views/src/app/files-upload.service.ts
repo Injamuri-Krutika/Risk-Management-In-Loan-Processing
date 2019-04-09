@@ -6,7 +6,9 @@ import { catchError, map, tap } from "rxjs/operators";
 
 // import { Http, Headers, ResponseContentType } from "@angular/http";
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class FilesUploadService {
   constructor(private http: HttpClient) {}
   uploadFilesUrl: string = "";
@@ -22,6 +24,14 @@ export class FilesUploadService {
     params: {}
   };
 
+  downloadFile(file: String, email: String) {
+    var body = { filename: file, email };
+
+    return this.http.post("http://localhost:8000/file/download", body, {
+      responseType: "blob",
+      headers: new HttpHeaders().append("Content-Type", "application/json")
+    });
+  }
   downloadPDF(filename, filetype): any {
     return this.http.get("http://127.0.0.1:3000/file/" + filename, {
       responseType: "blob"

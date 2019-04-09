@@ -29,13 +29,13 @@ exports.addCustomer = (request, response) => {
     password: request.body.password,
     eligibleLoanAmount: request.body.eligibleLoanAmount,
     finalLoanAmount: request.body.finalLoanAmount,
-    // finalTenure: request.body.finalTenure,
     finalEMI: request.body.finalEMI,
     tenure: request.body.tenure,
     roi: request.body.roi,
     loanEMI: request.body.loanEMI,
     loanStatus: request.body.loanStatus,
-    requestId: request.body.requestId
+    requestId: request.body.requestId,
+    attachmentList: request.body.attachmentList
   });
   console.log(newCustomer);
   newCustomer.save(err => {

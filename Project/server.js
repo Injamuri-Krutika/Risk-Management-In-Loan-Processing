@@ -7,6 +7,7 @@ const registration = require("./routes/register.route");
 const confirmation = require("./routes/confirmation.route");
 const login = require("./routes/login.route");
 const loan = require("./routes/loan.route");
+const file = require("./routes/file.route");
 
 const distPath = path.join(__dirname, "/npviews/dist/Project");
 const port = 8000;
@@ -31,6 +32,7 @@ db.once("open", function callback() {
   app.use("/confirm", confirmation);
   app.use("/login", login);
   app.use("/loan-details", loan);
+  app.use("/file", file);
 
   // app.get("/", (req, res) => {
   //   res.sendFile(distPath + "index.html");

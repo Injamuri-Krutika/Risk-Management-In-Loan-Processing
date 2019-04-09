@@ -1,31 +1,57 @@
 .buttonRight {
-    float: right;
-    margin: 10px;
+  float: right;
+  margin: 10px;
+}
+.field {
+  font-size: 16px;
+  color: blue;
+}
+.input {
+  margin-left: 50%;
+}
+.main {
+  width: 800px;
+  height: 350px;
+  padding: 30px;
+  border: 3px solid;
+  margin: 80px;
+  position: fixed;
+  margin-left: 18%;
+}
+.f2 {
+  margin-left: 50%;
+}
 
-  }
-  .field{
-   font-size: 16px;
-   color:blue;
-   
-  }
-  .input{
-    margin-left:50%;
-  }
-  .main{
-    
-      width: 800px;
-      height: 350px;
-      padding: 30px; 
-      border: 3px solid;
-      margin: 80px;
-      position: fixed;
-      margin-left:18%;
-      
-       
-      
-  }
-  .f2{
-    margin-left:50%;
-   
-  }
-  
+:host {
+  height: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.actions {
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.container {
+  height: 100%;
+}
+
+.mat-raised-button {
+  margin-right: 10px;
+  margin-left: 20px;
+}
+
+.form-card {
+  width: 500px;
+  margin: auto;
+  margin-top: 50px;
+  text-align: center;
+}
+
+.heading {
+  margin: 20px;
+  text-align: center;
+  color: #3f51b5;
+}

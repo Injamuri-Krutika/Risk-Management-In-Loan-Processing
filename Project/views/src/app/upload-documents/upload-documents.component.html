@@ -1,200 +1,70 @@
-<!-- <mat-card class="new-user-div">
-  <form name="upload">
-    <ng-template matStepLabel>Upload Documents</ng-template>
-    <mat-form-field class="example-full-width">
-         <md-button id="uploadButton"
-            class="md-raised md-primary"
-            aria-label="attach_file">
-            Choose file
-        </md-button> -->
-
-<!-- <input type="file" (change)="onFileSelected($event)">
-  -->
-<!-- <button mat-raised-button
-  
-  formControlName="file"
-  aria-placeholder="choose file"
-  required>chooseFile</button> -->
-
-<!-- <button mat-button color="warn" (click)="onClick()">
-      <mat-icon>file_upload</mat-icon>
-      {{text}}
-</button> -->
-
-<!-- <md-input-container md-no-float>
-            <input id="textInput" ng-model="fileName" type="text" placeholder="No file chosen" ng-readonly="true">
-        </md-input-container>   -->
-
-<!-- <md-button md-no-ink class="md-primary">Primary (md-noink)</md-button> -->
-
-<!-- <div>
-        <button
-          mat-button
-          class="buttonRight"
-          [disabled]="formGroup.invalid"
-        >
-          Next
-        </button>
-    </div> -->
-
-<!--</mat-form-field>
-</form>
-
-      <div ng-controller="AppCtrl" layout="column" ng-cloak="" ng-app="MyApp">
-
-        <md-content layout-padding layout="row" layout-align="start end">
-          <aps-upload-file></aps-upload-file>
-        </md-content>
-      
-      </div> 
-    </mat-card> -->
-
-<!-- <div class="main">
-	<h2>UPLOAD DOCUMENTS</h2>
-	<div class="submain" (onSubmit)="">
-   <form name="upload">
-    <span class="field"> Upload Adhar </span>
-      <input type="file" name="adhar" class="input" accept=".pdf"><br>
-      <span class="field"> Upload PAN Card </span>
-      <input type="file" name="pan" class="input" accept=".pdf" ><br>
-      <span class="field"> Upload Last six Months Bank Payment History </span>
-      <input type="file" name="adhar" class="input" accept=".pdf" >
-      <input type="submit" value="upload">
-
-</form>
-</div>
-</div>
- -->
-
-<div class="main">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="adhar">Adhar</label>
-      <div class="f2">
-        <input
-          type="file"
-          id="adhar"
-          formControlName="adhar"
-          (change)="onFileChange($event, 'adhar')"
-          accept=".pdf"
-          #fileInput
-        />
-        <button
-          type="button"
-          class="btn btn-sm btn-default"
-          (click)="clearFileAdhar($event)"
-        >
-          clear file
-        </button>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="pan">PAN</label>
-      <div class="f2">
-        <input
-          type="file"
-          id="pan"
-          formControlName="pan"
-          (change)="onFileChange($event, 'pan')"
-          accept=".pdf"
-          #fileInput
-        />
-        <button
-          type="button"
-          class="btn btn-sm btn-default"
-          (click)="clearFilePan($event)"
-        >
-          clear file
-        </button>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="bs">Bank Statements</label>
-      <div class="f2">
-        <input
-          type="file"
-          id="bs"
-          formControlName="bs"
-          (change)="onFileChange($event, 'bs')"
-          accept=".pdf"
-          #fileInput
-        />
-        <button
-          type="button"
-          class="btn btn-sm btn-default"
-          (click)="clearFileBankStmts($event)"
-        >
-          clear file
-        </button>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="ip">Identity Proof</label>
-      <div class="f2">
-        <input
-          type="file"
-          id="ip"
-          formControlName="ip"
-          (change)="onFileChange($event, 'ip')"
-          accept=".pdf"
-          #fileInput
-        />
-        <button
-          type="button"
-          class="btn btn-sm btn-default"
-          (click)="clearFileID($event)"
-        >
-          clear file
-        </button>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="pr">Proof Of Residence</label>
-      <div class="f2">
-        <input
-          type="file"
-          id="pr"
-          formControlName="pr"
-          (change)="onFileChange($event, 'pr')"
-          accept=".pdf"
-          #fileInput
-        />
-        <button
-          type="button"
-          class="btn btn-sm btn-default"
-          (click)="clearFileProofRes($event)"
-        >
-          clear file
-        </button>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="pp">Proof Of Property</label>
-      <div class="f2">
-        <input
-          type="file"
-          id="pp"
-          formControlName="pp"
-          (change)="onFileChange($event, 'pp')"
-          accept=".pdf"
-          #fileInput
-        />
-        <button
-          type="button"
-          class="btn btn-sm btn-default"
-          (click)="clearFileProofPro($event)"
-        >
-          clear file
-        </button>
-      </div>
-    </div>
-    <button
-      style="text-align: center;"
-      type="submit"
-      [disabled]="form.invalid || loading"
-      class="btn btn-success"
+<mat-card class="form-card">
+  <mat-card-title class="heading">Uplaod Files</mat-card-title>
+  <mat-card-content>
+    <input
+      type="file"
+      #file
+      name="fileUplaod"
+      id="fileUpload"
+      style="display: none"
+      multiple
+      ng2FileSelect
+      [uploader]="uploader"
+    />
+    <div
+      class="container"
+      fxLayout="column"
+      fxLayoutAlign="space-evenly stretch"
     >
-      Submit <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i>
-    </button>
-  </form>
-</div>
+      <div>
+        <button
+          [disabled]="uploading || uploadSuccessful"
+          mat-raised-button
+          color="primary"
+          class="add-files-btn"
+          (click)="addFiles()"
+        >
+          Add Files
+        </button>
+      </div>
+
+      <!-- This is the content of the dialog, containing a list of the files to upload -->
+      <mat-dialog-content fxFlex>
+        <mat-list>
+          <mat-list-item *ngFor="let item of uploader.queue">
+            <h4 mat-line>{{ item.file.name }}</h4>
+            <mat-progress-bar
+              mode="determinate"
+              [value]="item.progress"
+            ></mat-progress-bar>
+            <mat-dialog-actions class="actions">
+              <button
+                type="button"
+                color="danger"
+                mat-raised-button
+                (click)="item.remove()"
+                *ngIf="item.progress != 100"
+              >
+                Cancel
+              </button>
+            </mat-dialog-actions>
+          </mat-list-item>
+        </mat-list>
+        <div *ngIf="uploader?.queue?.length > 0">
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            class="btn btn-primary"
+            (click)="uploader.uploadAll(); submitFiles()"
+            [disabled]="uploader?.queue?.length != 6"
+          >
+            Submit
+          </button>
+        </div>
+      </mat-dialog-content>
+
+      <!-- This are the actions of the dialog, containing the primary and the cancel button-->
+    </div>
+  </mat-card-content>
+</mat-card>
