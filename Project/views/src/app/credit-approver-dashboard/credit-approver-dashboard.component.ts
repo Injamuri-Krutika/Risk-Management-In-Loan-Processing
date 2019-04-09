@@ -3,6 +3,7 @@ import { map } from "rxjs/operators";
 import { Breakpoints, BreakpointObserver } from "@angular/cdk/layout";
 import { CreditApprover, Customer } from "../Classes";
 import { LoanDetailsService } from "../loan-details.service";
+import { stringify } from "@angular/core/src/render3/util";
 
 @Component({
   selector: "app-credit-approver-dashboard",
@@ -61,15 +62,28 @@ export class CreditApproverDashboardComponent implements OnInit {
   }
 
   updateLoan(status, requestId, email) {
+    var message;
+
+    if (status === "Accepted") {
+      message =
+        "Hello,\n\n" +
+        "Congratulations!! We are happy to inform you that your loan is ACCEPTED.";
+    } else {
+      message =
+        "Hello,\n\n" + "We are sorry to inform you that your loan is REJECTED.";
+    }
+
     var requestObject = {
       loanStatus: status,
       requestId,
-      email
+      email,
+      message
     };
     this.loanDetails.updateAppliedLoan(requestObject).subscribe(res => {
       console.log(res);
       if (res.nModified == 1 && res.n == 1) {
         this.loanDetails.getAppliedLoans().subscribe(res => {
+          console.log("Hello buddy!");
           this.appliedLoans = res.loans;
           this.viewDetails = null;
           this.panelOpenState = true;

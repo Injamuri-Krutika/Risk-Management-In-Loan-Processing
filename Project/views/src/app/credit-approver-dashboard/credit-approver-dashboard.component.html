@@ -172,14 +172,9 @@
             </td>
           </tr>
 
-          <tr>
-            <td style="text-align: right">Income:</td>
-            <td style="text-align: left">
-              {{ viewDetails.income | currency: "INR":true }}
-            </td>
-          </tr>
+          
 
-          <tr>
+          <tr *ngIf="viewDetails.emiPerMonth">
             <td style="text-align: right">Current EMI per month:</td>
             <td style="text-align: left">
               {{ viewDetails.emiPerMonth | currency: "INR":true }}
@@ -279,7 +274,7 @@
         mat-raised-button
         color="warn"
         style="float:right;"
-        (click)="updateLoan('Rejected')"
+        (click)="updateLoan('Rejected', viewDetails.requestId, viewDetails.email)"
       >
         Reject
       </button>
