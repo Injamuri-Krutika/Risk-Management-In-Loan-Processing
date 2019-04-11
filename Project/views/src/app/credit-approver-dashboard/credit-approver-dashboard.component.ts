@@ -5,6 +5,7 @@ import { CreditApprover, Customer } from "../Classes";
 import { LoanDetailsService } from "../loan-details.service";
 import { stringify } from "@angular/core/src/render3/util";
 import { FilesUploadService } from "../files-upload.service";
+import { saveAs } from "file-saver";
 
 @Component({
   selector: "app-credit-approver-dashboard",
@@ -43,8 +44,7 @@ export class CreditApproverDashboardComponent implements OnInit {
   appliedLoans: Customer[];
   displayedColumns: string[];
   viewDetails: Customer;
-  attachmentList = JSON.parse(sessionStorage.getItem("userDetails"))
-    .attachmentList;
+  attachmentList: any = [];
 
   ngOnInit() {
     this.creditApprover = JSON.parse(sessionStorage.getItem("creditApprover"));
@@ -64,6 +64,7 @@ export class CreditApproverDashboardComponent implements OnInit {
   verifyDetails(index) {
     this.panelOpenState = false;
     this.viewDetails = this.appliedLoans[index];
+    this.attachmentList = this.viewDetails.attachmentList;
   }
 
   updateLoan(status, requestId, email) {
@@ -99,8 +100,15 @@ export class CreditApproverDashboardComponent implements OnInit {
   download(index, email) {
     var filename = this.attachmentList[index].uploadname;
 
-    this.fileService
-      .downloadFile(filename, email)
-      .subscribe(data => saveAs(data, filename), error => console.error(error));
+    this.fileService.downloadFile(filename, email).subscribe(data => {
+      saveAs(data, filename), error => console.error(error);
+      console.log("Hi46");
+    });
+  }
+
+  downloadFileNow(data: any) {
+    const blob = new Blob([data], { type: "application/pdf" });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url);
   }
 }

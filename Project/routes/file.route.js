@@ -44,7 +44,7 @@ _router.post("/download", function(req, res, next) {
     "1554801582721.Report.pdf";
   // req.body.filename;
   console.log(filepath);
-  res.sendFile(filepath);
+  res.download(filepath);
 });
 
 module.exports = _router;
