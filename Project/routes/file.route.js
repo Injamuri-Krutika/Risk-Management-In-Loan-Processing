@@ -41,8 +41,7 @@ _router.post("/download", function(req, res, next) {
     "/" +
     req.body.email +
     "/" +
-    "1554801582721.Report.pdf";
-  // req.body.filename;
+    req.body.filename;
   console.log(filepath);
   res.download(filepath);
 });

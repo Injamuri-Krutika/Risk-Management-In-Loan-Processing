@@ -55,10 +55,10 @@ export class RegistrationComponent implements OnInit {
       Validators.required,
       Validators.max(this.custDetails.eligibleLoanAmount)
     ]),
-    updatedTenure: new FormControl(this.custDetails.tenure, [
-      Validators.required,
-      Validators.max(this.custDetails.tenure)
-    ]),
+    updatedTenure: new FormControl(
+      { value: this.custDetails.tenure, disabled: true },
+      [Validators.required, Validators.max(this.custDetails.tenure)]
+    ),
     updatedEMI: new FormControl({
       value: this.custDetails.loanEMI,
       disabled: true

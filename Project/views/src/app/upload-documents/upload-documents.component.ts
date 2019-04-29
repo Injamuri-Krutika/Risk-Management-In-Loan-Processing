@@ -68,7 +68,7 @@ export class UploadDocumentsComponent implements OnInit {
       custDetails.attachmentList = this.attachmentList;
       sessionStorage.setItem("customerDetails", JSON.stringify(custDetails));
       this.router.navigate(["/register"]);
-    }, 2000);
+    }, 3500);
   }
 
   ngOnInit() {}

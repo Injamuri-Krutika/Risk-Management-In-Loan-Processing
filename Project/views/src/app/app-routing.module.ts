@@ -11,7 +11,7 @@ import { CustomersDashboardComponent } from "./customers-dashboard/customers-das
 import { CreditApproverDashboardComponent } from "./credit-approver-dashboard/credit-approver-dashboard.component";
 
 const routes: Routes = [
-  { path: "", redirectTo: "/upload-documents", pathMatch: "full" },
+  { path: "", redirectTo: "/basic", pathMatch: "full" },
   { path: "basic", component: BasicComponent },
   { path: "new-user", component: NewUserComponent },
   { path: "income-emi", component: IncomeEmiComponent },
