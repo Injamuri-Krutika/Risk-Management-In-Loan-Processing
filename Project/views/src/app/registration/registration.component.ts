@@ -56,7 +56,7 @@ export class RegistrationComponent implements OnInit {
       Validators.max(this.custDetails.eligibleLoanAmount)
     ]),
     updatedTenure: new FormControl(
-      { value: this.custDetails.tenure, disabled: true },
+      { value: this.custDetails.tenure, disabled: false },
       [Validators.required, Validators.max(this.custDetails.tenure)]
     ),
     updatedEMI: new FormControl({
@@ -99,6 +99,9 @@ export class RegistrationComponent implements OnInit {
   }
 
   updateEMI() {
+    console.log(this.profileForm.get("updatedTenure").valid)
+    console.log(this.profileForm.get("loanAmount").valid)
+
     if (
       this.profileForm.get("updatedTenure").valid &&
       this.profileForm.get("loanAmount").valid

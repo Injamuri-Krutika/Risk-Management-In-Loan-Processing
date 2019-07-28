@@ -49,7 +49,8 @@ export class CreditApproverDashboardComponent implements OnInit {
   ngOnInit() {
     this.creditApprover = JSON.parse(sessionStorage.getItem("creditApprover"));
     this.loanDetails.getAppliedLoans().subscribe(res => {
-      this.appliedLoans = res.loans;
+      if(res)
+        this.appliedLoans = res.loans;
     });
     this.displayedColumns = [
       "requestId",

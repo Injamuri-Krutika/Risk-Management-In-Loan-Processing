@@ -61,11 +61,11 @@ export class CalculateLoanParametersService {
     console.log(tenure);
     console.log(
       Math.pow(1 + r, n * year) * loanAmount * r,
-      Math.pow(1 + r, n * year - 1)
+      (Math.pow(1 + r, n * year) - 1)
     );
     var A =
       (Math.pow(1 + r, n * year) * loanAmount * r) /
-      Math.pow(1 + r, n * year - 1);
+      (Math.pow(1 + r, n * year) - 1);
     console.log(A);
     var emi = A.toFixed(2);
     return parseInt(emi);
